@@ -7,8 +7,8 @@ class Record(db.Model):
     __tablename__ = "records"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    quote_id = db.Column(db.Integer, db.ForeignKey("quotes.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    quote_id = db.Column(db.Integer, db.ForeignKey("quotes.id", ondelete="CASCADE"), nullable=False)
     accuracy = db.Column(db.Integer, nullable=False)
     # started_at = db.Column(db.DateTime, nullable=False)
     # ended_at = db.Column(db.DateTime, nullable=False)
