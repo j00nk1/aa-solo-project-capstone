@@ -1,7 +1,5 @@
 from .db import db
 
-# from datetime import datetime
-
 
 class Quote(db.Model):
     __tablename__ = "quotes"
@@ -10,6 +8,13 @@ class Quote(db.Model):
     author = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    # created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     recods = db.relationship("Records", back_populates="quote")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "author": self.author,
+            "title": self.title,
+            "content": self.content,
+        }
