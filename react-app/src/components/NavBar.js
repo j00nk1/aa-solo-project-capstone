@@ -1,38 +1,59 @@
-
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+import React from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import LogoutButton from "./auth/LogoutButton";
 
 const NavBar = () => {
+  const sessionUser = useSelector(state => state.session.user);
+  const userId = sessionUser?.id;
+  let userVals = [];
+  if (sessionUser) {
+    userVals = Object.values(sessionUser);
+  }
+
   return (
-    <nav>
-      <ul>
+    <nav className="light_gray">
+      <div>
+        <h1>Quote Typing</h1>
+      </div>
+      <ul className="container_row">
         <li>
-          <NavLink to='/' exact={true} activeClassName='active'>
+          <NavLink to="/" exact={true} activeClassName="active">
             Home
           </NavLink>
         </li>
-        <li>
-          <NavLink to='/login' exact={true} activeClassName='active'>
-            Login
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/sign-up' exact={true} activeClassName='active'>
-            Sign Up
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/users' exact={true} activeClassName='active'>
-            Users
-          </NavLink>
-        </li>
-        <li>
-          <LogoutButton />
-        </li>
+        {userVals.length > 0 ? (
+          <>
+            <li>
+              <NavLink
+                to={`/users/${userId}`}
+                exact={true}
+                activeClassName="active"
+              >
+                Profile Page
+              </NavLink>
+            </li>
+            <li>
+              <LogoutButton />
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to="/login" exact={true} activeClassName="active">
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/sign-up" exact={true} activeClassName="active">
+                Sign Up
+              </NavLink>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
-}
+};
 
 export default NavBar;
