@@ -1,16 +1,19 @@
-from app.models import db, Comment
 from random import randint
+import lorem
+
+from app.models import db, Comment
+
+print()
 
 
 def seed_comments():
     data = [
         Comment(
             user_id=randint(1, 10),
-            quote_id=randint(1, 50),
-            accuracy=randint(70, 100),
-            duration=randint(10000, 21000),
+            record_id=randint(1, 100),
+            content=lorem.sentence(),
         )
-        for x in range(100)
+        for x in range(50)
     ]
 
     db.session.add_all(data)
