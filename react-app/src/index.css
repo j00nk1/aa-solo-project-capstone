@@ -1,1 +1,109 @@
 /* TODO Add site wide styles */
+/* reset css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+main {
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+textarea {
+  overflow: auto;
+  resize: none;
+}
+
+ol,
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+/*------------ custom classes -------------*/
+html {
+  background: linear-gradient(
+    45deg,
+    rgba(26, 25, 28, 1) 0%,
+    rgba(37, 37, 38, 1) 50%,
+    #1e1c1e 100%
+  );
+  color: white;
+}
+
+.auth_container_center {
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin: 3em auto;
+  padding: 2em;
+  border-radius: 1em;
+}
+
+.light_gray {
+  background-color: #49494d;
+}
+
+.dark_gray {
+  background-color: #2b2b2e;
+}
+
+input,
+textarea,
+select {
+  background-color: #27272a;
+}
+
+.errors {
+  color: red;
+}
+
+nav {
+  position: sticky;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 0;
+  justify-content: space-between;
+  padding: 1em;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.container_row {
+  display: flex;
+}
+
+.container_col {
+  display: flex;
+  flex-direction: column;
+}
+
+nav .container_row {
+  align-items: center;
+  gap: 1em;
+}
