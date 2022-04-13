@@ -37,6 +37,7 @@ app.register_blueprint(user_routes, url_prefix="/api/users")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(quote_routes, url_prefix="/api/quotes")
 
+
 db.init_app(app)
 Migrate(app, db)
 
