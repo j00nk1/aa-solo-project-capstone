@@ -1,15 +1,11 @@
 from app.models import db, Quote
+from app.fetched import fetched_quotes
 
 
 def seed_quotes():
-    demo = User(username="Demo", email="demo@aa.io", password="password")
-    marnie = User(username="marnie", email="marnie@aa.io", password="password")
-    bobbie = User(username="bobbie", email="bobbie@aa.io", password="password")
+    data = [Quote(author=quote["a"], content=quote["q"], char_count=int(quote["c"])) for quote in fetched_quotes]
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
-
+    db.session.add_all(data)
     db.session.commit()
 
 

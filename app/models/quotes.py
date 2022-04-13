@@ -6,15 +6,17 @@ class Quote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(100), nullable=False)
-    title = db.Column(db.String(100), nullable=False)
+    # title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    char_count = db.Column(db.Integer, nullable=False)
 
-    recods = db.relationship("Records", back_populates="quote")
+    records = db.relationship("Record", back_populates="quote")
 
     def to_dict(self):
         return {
             "id": self.id,
             "author": self.author,
-            "title": self.title,
+            # "title": self.title,  # no titles
             "content": self.content,
+            "char_count": self.char_count,
         }

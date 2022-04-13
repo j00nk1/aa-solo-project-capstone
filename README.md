@@ -1,6 +1,7 @@
 # Quote-typing
 
 [Quote-typing](https://quote-typing.herokuapp.com/) is a typing practice application where users can practice typing with famous quotes.
+All quotes are fetched from[ZenQuotes.io](https://zenquotes.io/).
 
 ## Technologies
 

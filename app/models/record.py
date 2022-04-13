@@ -12,7 +12,7 @@ class Record(db.Model):
     accuracy = db.Column(db.Integer, nullable=False)
     # started_at = db.Column(db.DateTime, nullable=False)
     # ended_at = db.Column(db.DateTime, nullable=False)
-    duration = db.Column(db.Integer, nullable=False)  # Store duration in seconds
+    duration = db.Column(db.BigInteger, nullable=False)  # Store duration in milliseconds
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
