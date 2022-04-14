@@ -16,8 +16,6 @@ function Quotes() {
     record => record.user_id === id
   );
 
-  console.log(recordList);
-
   const hasPlayed = (id, records = recordList) => {
     let bool = false;
     records.forEach(record => {

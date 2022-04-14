@@ -22,6 +22,7 @@ def quote(id):
 def records(id):
   form = RecordForm()
   form['csrf_token'].data = request.cookies['csrf_token']
+  print(form.data, "****************")
   if form.validate_on_submit():
     record = Record(
       user_id = form.data["user_id"],
@@ -33,6 +34,5 @@ def records(id):
     
     db.session.add(record)
     db.session.commit()
-    print(record);
-    return record
+    return record.to_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401

@@ -8,4 +8,4 @@ class RecordForm(FlaskForm):
   accuracy = FloatField("accuracy", validators=[DataRequired()])
   duration = IntegerField("duration", validators=[DataRequired()])
   wpm = IntegerField("wpm", validators=[DataRequired()])
-  updated_at = TimeField("updated_at", validators=[DataRequired()])
+  updated_at = TimeField("updated_at")

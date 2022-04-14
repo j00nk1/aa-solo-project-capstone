@@ -1,7 +1,14 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import useTyping, { CharStateType, PhaseType } from "react-typing-game-hook";
+import { addRecordThunk } from "../../store/records";
 
 function TypingInput({ text }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const user_id = sessionUser.id;
   const [isFocused, setIsFocused] = useState(false);
   const letterElements = useRef(null); // to access the element, letterElements.current
 
@@ -9,8 +16,9 @@ function TypingInput({ text }) {
   const [time, setTime] = useState("0:00");
   // for recording purpose
   const [wpm, setWpm] = useState(0);
-  const [recordDuration, setRecordDuration] = useState(0);
-  const [acc, setAcc] = useState(0);
+  const [duration, setRecordDuration] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [disable, setDisable] = useState(true);
 
   // destructure from useTyping packet
   const {
@@ -58,7 +66,8 @@ function TypingInput({ text }) {
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
       setRecordDuration(dur); // for recording duration
-      setAcc(((correctChar / text.content.length) * 100).toFixed(2));
+      setAccuracy(+((correctChar / text.content.length) * 100).toFixed(2)); // toFixed returns STRING
+      setDisable(false);
       setWpm(Math.round(((60 / durInSec) * correctChar) / 5));
     } else {
       setTime(0);
@@ -76,6 +85,25 @@ function TypingInput({ text }) {
       // if the pressed key's val is a single char
       insertTyping(letter);
     }
+  };
+
+  // submission
+  const submit = () => {
+    const record = {
+      user_id,
+      quote_id: text.id,
+      accuracy,
+      duration,
+      wpm,
+    };
+
+    dispatch(addRecordThunk(record));
+
+    setDisable(true); // disable submission OR redirect to other page
+  };
+
+  const back = () => {
+    history.push("/quotes");
   };
 
   return (
@@ -122,7 +150,7 @@ function TypingInput({ text }) {
         {phase === PhaseType.Ended && startTime && endTime ? (
           <>
             <li>WPM: {wpm}</li>
-            <li>Accuracy: {acc}%</li>
+            <li>Accuracy: {accuracy}%</li>
             <li>Duration: {time}</li>
           </>
         ) : null}
@@ -130,6 +158,10 @@ function TypingInput({ text }) {
         <li> Correct Characters: {correctChar}</li>
         <li> Error Characters: {errorChar}</li>
       </ul>
+      <button onClick={submit} disabled={disable}>
+        Submit
+      </button>
+      <button onClick={back}>Back to quote list</button>
     </div>
   );
 }
