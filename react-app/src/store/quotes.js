@@ -23,7 +23,9 @@ const initialState = {};
 export default function quotesReducer(state = initialState, action) {
   switch (action.type) {
     case GET_QUOTES:
-      return { ...state, quotes: action.quotes };
+      const newState = {};
+      action.quotes.quotes.forEach(quote => (newState[quote.id] = quote));
+      return newState;
     default:
       return state;
   }
