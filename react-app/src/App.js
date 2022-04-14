@@ -10,6 +10,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Quotes from "./components/Quotes";
 import Game from "./components/Game";
+import Test from "./components/Game/test";
 
 import { authenticate } from "./store/session";
 
@@ -52,6 +53,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/quotes/:id" exact={true}>
           <Game />
+        </ProtectedRoute>
+        <ProtectedRoute path="/test/:id" exact={true}>
+          <Test />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

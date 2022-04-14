@@ -14,7 +14,15 @@ function Game() {
   const [text, setText] = useState("");
 
   const {
-    states: { chars, charsState },
+    states: {
+      chars,
+      charsState,
+      phase,
+      correctChar,
+      errorChar,
+      startTime,
+      endTime,
+    },
     actions: { insertTyping, resetTyping, deleteTyping },
   } = useTypingGame(currQuote?.content);
 
@@ -31,9 +39,7 @@ function Game() {
           </h1>
         </>
       }
-      <textarea
-        // value={text}
-        // onChange={e => setText(e.target.value)}
+      <h2
         onKeyDown={e => {
           const key = e.key;
           if (key === "Escape") {
@@ -56,7 +62,7 @@ function Game() {
             </span>
           );
         })}
-      </textarea>
+      </h2>
     </div>
   );
 }
