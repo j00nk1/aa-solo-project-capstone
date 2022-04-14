@@ -9,7 +9,7 @@ class Record(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     quote_id = db.Column(db.Integer, db.ForeignKey("quotes.id", ondelete="CASCADE"), nullable=False)
-    accuracy = db.Column(db.Integer, nullable=False)
+    accuracy = db.Column(db.Float(2), nullable=False)
     # started_at = db.Column(db.DateTime, nullable=False)
     # ended_at = db.Column(db.DateTime, nullable=False)
     duration = db.Column(db.BigInteger, nullable=False)  # Store duration in milliseconds

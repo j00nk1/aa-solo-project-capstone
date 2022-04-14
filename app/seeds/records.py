@@ -1,5 +1,5 @@
 from app.models import db, Record
-from random import randint
+from random import randint, uniform
 
 
 def seed_records():
@@ -8,7 +8,7 @@ def seed_records():
         Record(
             user_id=randint(1, 10),
             quote_id=randint(1, 50),
-            accuracy=randint(70, 100),
+            accuracy=round(uniform(70, 100), 2),
             duration=randint(10000, 21000),
             wpm=randint(30, 90)
         )
