@@ -85,7 +85,21 @@ const recordReducer = (state = initialState, action) => {
       action.records.records.forEach(record => (newState[record.id] = record));
       return newState;
 
+    case ADD_RECORD:
+      newState[action.record.id] = action.record;
+      return newState;
+
+    case EDIT_RECORD:
+      newState[action.record.id] = action.record;
+      return newState;
+
+    case DELETE_RECORD:
+      delete newState[action.id];
+      return newState;
+
     default:
       return state;
   }
 };
+
+export default recordReducer;
