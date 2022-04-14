@@ -2,9 +2,14 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import useTyping, { CharStateType, PhaseType } from "react-typing-game-hook";
 
 function TypingInput({ text }) {
-  const [duration, setDuration] = useState("0:00");
   const [isFocused, setIsFocused] = useState(false);
   const letterElements = useRef(null); // to access the element, letterElements.current
+
+  // for rendering purpose
+  const [time, setTime] = useState("0:00");
+  // for recording purpose
+  const [wpm, setWpm] = useState(0);
+  const [recordDuration, setRecordDuration] = useState(0);
 
   // destructure from useTyping packet
   const {
@@ -42,15 +47,21 @@ function TypingInput({ text }) {
     }
   }, [currIndex]);
 
+  //set WPM
   useEffect(() => {
     if (phase === PhaseType.Ended && endTime && startTime) {
       const dur = endTime - startTime;
       const min = Math.floor(dur / 60000); // convert it into min
       const sec = (dur % 60000) / 1000; // convert it into sec
-      const minSec = min + "m" + (sec < 10 ? "0" : "") + sec + "s";
-      setDuration(minSec);
+      const time = min + ":" + (sec < 10 ? "0" : "") + sec;
+      const durInSec = Math.floor(dur / 1000);
+      setTime(time); // for rendering duration
+      setRecordDuration(dur); // for recording duration
+      setWpm(Math.round(((60 / durInSec) * correctChar) / 5));
+    } else {
+      setTime(0);
     }
-  }, [phase, startTime, endTime]);
+  }, [phase, startTime, endTime, correctChar]);
 
   //handle key presses
   const handleKeyDown = (letter, control) => {
@@ -72,18 +83,13 @@ function TypingInput({ text }) {
         onKeyDown={e => handleKeyDown(e.key, e.ctrlKey)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`text-xl outline-none relative font-serif`}
       >
-        <div
-          ref={letterElements}
-          className="tracking-wide pointer-events-none select-none mb-4"
-          tabIndex={0}
-        >
+        <div ref={letterElements} tabIndex={0}>
           {text?.content.split("").map((letter, index) => {
             let state = charsState[index];
             let color =
               state === CharStateType.Incomplete
-                ? "white"
+                ? "grey"
                 : state === CharStateType.Correct
                 ? "green"
                 : "red";
@@ -100,28 +106,26 @@ function TypingInput({ text }) {
               left: pos.left,
               top: pos.top,
             }}
-            className={`caret border-l-2 border-white`}
           >
-            &nbsp;
+            {/* &nbsp; */}
           </span>
         ) : null}
       </div>
-      <p className="text-sm">
+      <ul>
         {phase === PhaseType.Ended && startTime && endTime ? (
           <>
-            <span className="text-green-500 mr-4">
-              WPM: {Math.round(((60 / duration) * correctChar) / 5)}
-            </span>
-            <span className="text-blue-500 mr-4">
-              Accuracy: {((correctChar / text.length) * 100).toFixed(2)}%
-            </span>
-            <span className="text-yellow-500 mr-4">Duration: {duration}s</span>
+            <li>WPM: {wpm}</li>
+            <li>
+              Accuracy: {((correctChar / text.content.length) * 100).toFixed(2)}
+              %
+            </li>
+            <li>Duration: {time}</li>
           </>
         ) : null}
-        <span className="mr-4"> Current Index: {currIndex}</span>
-        <span className="mr-4"> Correct Characters: {correctChar}</span>
-        <span className="mr-4"> Error Characters: {errorChar}</span>
-      </p>
+        <li> Current Index: {currIndex}</li>
+        <li> Correct Characters: {correctChar}</li>
+        <li> Error Characters: {errorChar}</li>
+      </ul>
     </div>
   );
 }
