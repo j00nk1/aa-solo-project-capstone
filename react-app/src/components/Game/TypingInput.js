@@ -84,7 +84,11 @@ function TypingInput({ text }) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       >
-        <div ref={letterElements} tabIndex={0}>
+        <div
+          ref={letterElements}
+          tabIndex={0}
+          style={{ marginBottom: 10, border: "1px solid white", padding: 10 }}
+        >
           {text?.content.split("").map((letter, index) => {
             let state = charsState[index];
             let color =
@@ -106,7 +110,10 @@ function TypingInput({ text }) {
               left: pos.left,
               top: pos.top,
             }}
-          ></span>
+            className={"caret input"}
+          >
+            &nbsp;
+          </span>
         ) : null}
       </div>
       <ul>

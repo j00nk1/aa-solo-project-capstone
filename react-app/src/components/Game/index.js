@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -23,6 +23,9 @@ function Test() {
         <h1>{currQuote?.author}</h1>
       </div>
       <p>Esc to reset</p>
+      <p style={{ color: "grey", marginBottom: 10 }}>
+        Click on the text below and start typing
+      </p>
       <div>
         <TypingInput text={currQuote} />
       </div>
