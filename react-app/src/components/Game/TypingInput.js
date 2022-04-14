@@ -63,7 +63,7 @@ function TypingInput({ text }) {
     } else {
       setTime(0);
     }
-  }, [phase, startTime, endTime, correctChar, text.content.length]);
+  }, [phase, startTime, endTime, correctChar, text?.content.length]);
 
   //handle key presses
   const handleKeyDown = (letter, control) => {
