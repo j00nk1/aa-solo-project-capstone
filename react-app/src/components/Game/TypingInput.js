@@ -77,7 +77,7 @@ function TypingInput({ text }) {
   };
 
   return (
-    <div>
+    <div className="typing_container">
       <div
         tabIndex={0}
         onKeyDown={e => handleKeyDown(e.key, e.ctrlKey)}
@@ -106,9 +106,7 @@ function TypingInput({ text }) {
               left: pos.left,
               top: pos.top,
             }}
-          >
-            {/* &nbsp; */}
-          </span>
+          ></span>
         ) : null}
       </div>
       <ul>
