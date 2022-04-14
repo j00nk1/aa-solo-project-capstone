@@ -31,8 +31,8 @@ const deleteRecord = id => {
   };
 };
 
-export const getAllRecordsThunk = () => async dispatch => {
-  const res = await fetch(`/api/records/all`);
+export const getRecordsThunk = () => async dispatch => {
+  const res = await fetch(`/api/records/`);
   const data = await res.json();
   dispatch(getAllRecords(data));
   return data;

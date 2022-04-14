@@ -7,8 +7,14 @@ from app.models import Record, db
 
 record_routes = Blueprint("records", __name__)
 
+@record_routes.route('/')
+def records():
+  records = Record.query.all()
+  return {'records': [record.to_dict() for record in records]}
+
+
 @record_routes.route('/<int:quote_id>')
-def records(quote_id):
+def record(quote_id):
   return {"quote_id": quote_id}
   # form = RecordForm()
   # # form['csrf_token'].data = request.cookies['csrf_token']
