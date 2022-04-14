@@ -10,6 +10,7 @@ function TypingInput({ text }) {
   // for recording purpose
   const [wpm, setWpm] = useState(0);
   const [recordDuration, setRecordDuration] = useState(0);
+  const [acc, setAcc] = useState(0);
 
   // destructure from useTyping packet
   const {
@@ -47,7 +48,7 @@ function TypingInput({ text }) {
     }
   }, [currIndex]);
 
-  //set WPM
+  //set WPM, duration, accuracy
   useEffect(() => {
     if (phase === PhaseType.Ended && endTime && startTime) {
       const dur = endTime - startTime;
@@ -57,11 +58,12 @@ function TypingInput({ text }) {
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
       setRecordDuration(dur); // for recording duration
+      setAcc(((correctChar / text.content.length) * 100).toFixed(2));
       setWpm(Math.round(((60 / durInSec) * correctChar) / 5));
     } else {
       setTime(0);
     }
-  }, [phase, startTime, endTime, correctChar]);
+  }, [phase, startTime, endTime, correctChar, text.content.length]);
 
   //handle key presses
   const handleKeyDown = (letter, control) => {
@@ -120,10 +122,7 @@ function TypingInput({ text }) {
         {phase === PhaseType.Ended && startTime && endTime ? (
           <>
             <li>WPM: {wpm}</li>
-            <li>
-              Accuracy: {((correctChar / text.content.length) * 100).toFixed(2)}
-              %
-            </li>
+            <li>Accuracy: {acc}%</li>
             <li>Duration: {time}</li>
           </>
         ) : null}
