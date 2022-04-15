@@ -112,7 +112,7 @@ function TypingInput({ text }) {
 
     await dispatch(addRecordThunk(record));
 
-    await history.push("/quotes");
+    await history.push("/");
   };
 
   const update = async () => {
@@ -126,11 +126,11 @@ function TypingInput({ text }) {
     };
 
     await dispatch(editRecordThunk(record));
-    await history.push("/quotes");
+    await history.push("/");
   };
 
   const back = () => {
-    history.push("/quotes");
+    history.push("/");
   };
 
   return (

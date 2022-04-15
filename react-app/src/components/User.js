@@ -1,9 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getRecordsThunk } from "../store/records";
 
 function User() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState({});
-  const { userId }  = useParams();
+  const { userId } = useParams();
+  const recordList = useSelector(state => Object.values(state.records));
+
+  useEffect(() => {
+    if (!recordList.length) dispatch(getRecordsThunk());
+  }, [dispatch, recordList]);
+
+  const userRecords = recordList.filter(record => record.user_id === +userId);
 
   useEffect(() => {
     if (!userId) {
