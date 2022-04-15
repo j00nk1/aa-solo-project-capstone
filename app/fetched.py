@@ -66,15 +66,15 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;The art of being happy lies in the power of extracting happiness from common things.&rdquo; &mdash; <footer>Henry Ward Beecher</footer></blockquote>",
     },
     {
-        "q": "Experience is simply the name we give our mistakes. ",
+        "q": "Experience is simply the name we give our mistakes.",
         "a": "Oscar Wilde",
-        "c": "52",
+        "c": "51",
         "h": "<blockquote>&ldquo;Experience is simply the name we give our mistakes. &rdquo; &mdash; <footer>Oscar Wilde</footer></blockquote>",
     },
     {
-        "q": "A man is not called wise because he talks and talks again; but if he is peaceful, loving and fearless then he is in truth called wise. ",
+        "q": "A man is not called wise because he talks and talks again; but if he is peaceful, loving and fearless then he is in truth called wise.",
         "a": "Buddha",
-        "c": "135",
+        "c": "134",
         "h": "<blockquote>&ldquo;A man is not called wise because he talks and talks again; but if he is peaceful, loving and fearless then he is in truth called wise. &rdquo; &mdash; <footer>Buddha</footer></blockquote>",
     },
     {
@@ -144,9 +144,9 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;Everybody needs a passion. That's what keeps life interesting.&rdquo; &mdash; <footer>Betty White</footer></blockquote>",
     },
     {
-        "q": "The key to success is to focus our conscious mind on things we desire not things we fear. ",
+        "q": "The key to success is to focus our conscious mind on things we desire not things we fear.",
         "a": "Brian Tracy",
-        "c": "90",
+        "c": "89",
         "h": "<blockquote>&ldquo;The key to success is to focus our conscious mind on things we desire not things we fear. &rdquo; &mdash; <footer>Brian Tracy</footer></blockquote>",
     },
     {
@@ -162,9 +162,9 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;I have never let my schooling interfere with my education.&rdquo; &mdash; <footer>Mark Twain</footer></blockquote>",
     },
     {
-        "q": "Too much sanity may be madness and the maddest of all, to see life as it is and not as it should be. ",
+        "q": "Too much sanity may be madness and the maddest of all, to see life as it is and not as it should be.",
         "a": "Miguel de Cervantes",
-        "c": "101",
+        "c": "100",
         "h": "<blockquote>&ldquo;Too much sanity may be madness and the maddest of all, to see life as it is and not as it should be. &rdquo; &mdash; <footer>Miguel de Cervantes</footer></blockquote>",
     },
     {
@@ -234,9 +234,9 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;Riches don't make a man rich, they only make him busier.&rdquo; &mdash; <footer>Christopher Columbus</footer></blockquote>",
     },
     {
-        "q": "Never do to others what you would not like them to do to you. ",
+        "q": "Never do to others what you would not like them to do to you.",
         "a": "Confucius",
-        "c": "62",
+        "c": "61",
         "h": "<blockquote>&ldquo;Never do to others what you would not like them to do to you. &rdquo; &mdash; <footer>Confucius</footer></blockquote>",
     },
     {
@@ -264,9 +264,9 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;Life should be touched, not strangled.  &rdquo; &mdash; <footer>Ray Bradbury</footer></blockquote>",
     },
     {
-        "q": "There is no medicine like hope, no incentive so great, and no tonic so powerful as expectation of something tomorrow. ",
+        "q": "There is no medicine like hope, no incentive so great, and no tonic so powerful as expectation of something tomorrow.",
         "a": "Orison Swett Marden",
-        "c": "118",
+        "c": "117",
         "h": "<blockquote>&ldquo;There is no medicine like hope, no incentive so great, and no tonic so powerful as expectation of something tomorrow. &rdquo; &mdash; <footer>Orison Swett Marden</footer></blockquote>",
     },
     {
@@ -294,9 +294,9 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;Setting goals is the first step in turning the invisible into the visible.&rdquo; &mdash; <footer>Tony Robbins</footer></blockquote>",
     },
     {
-        "q": "Change the changeable, accept the unchangeable, and remove yourself from the unacceptable. ",
+        "q": "Change the changeable, accept the unchangeable, and remove yourself from the unacceptable.",
         "a": "Denis Waitley",
-        "c": "91",
+        "c": "90",
         "h": "<blockquote>&ldquo;Change the changeable, accept the unchangeable, and remove yourself from the unacceptable. &rdquo; &mdash; <footer>Denis Waitley</footer></blockquote>",
     },
     {
