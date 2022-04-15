@@ -36,8 +36,7 @@ app.config.from_object(Config)
 # -------------- Blueprints -------------------------------
 app.register_blueprint(user_routes, url_prefix="/api/users")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
-app.register_blueprint(quote_routes, url_prefix="/api/quotes")
-app.register_blueprint(record_routes, url_prefix="/api/records")
+
 
 
 db.init_app(app)
@@ -79,3 +78,6 @@ def react_root(path):
     if path == "favicon.ico":
         return app.send_static_file("favicon.ico")
     return app.send_static_file("index.html")
+
+app.register_blueprint(quote_routes, url_prefix="/api/quotes")
+app.register_blueprint(record_routes, url_prefix="/api/records")
