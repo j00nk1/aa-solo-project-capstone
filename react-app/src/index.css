@@ -25,6 +25,10 @@ textarea {
   line-height: 1.15;
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 select,
 textarea {
@@ -101,6 +105,11 @@ nav {
   align-items: center;
 }
 
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .container_row {
   display: flex;
 }
@@ -113,4 +122,84 @@ nav {
 nav .container_row {
   align-items: center;
   gap: 1em;
+}
+
+.quotes_container {
+  background-color: #323236;
+  width: 80%;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  gap: 2rem;
+  max-height: 85vh;
+  overflow-y: scroll;
+}
+
+.quotes_container::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 5px;
+  height: 90%;
+}
+
+.quotes_container::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border: 1px solid rgb(75, 75, 75);
+  border-radius: 20px;
+}
+
+.quote_card {
+  justify-content: space-between;
+}
+
+.record_list {
+  gap: 10px;
+}
+
+.wpm,
+.acc,
+.dur {
+  font-weight: 300;
+}
+
+.wpm {
+  color: #0bb981;
+}
+
+.acc {
+  color: #2a82e6;
+}
+
+.dur {
+  color: #f59e07;
+}
+
+button {
+  border-radius: 20px;
+  border: none;
+  padding: 5px 10px;
+}
+
+.btn_container {
+  align-self: center;
+  gap: 10px;
+}
+
+.play_btn {
+  width: 10rem;
+  color: black;
+  color: orangered;
+  font-weight: bold;
+}
+
+.play_btn:hover {
+  background-color: #f59e07;
+  color: white;
+  transition: 0.5s;
+}
+
+.delete_btn:hover {
+  background-color: firebrick;
+  color: white;
+  transition: 0.5s;
 }

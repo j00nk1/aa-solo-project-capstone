@@ -45,14 +45,14 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
-          <h1>My Home Page</h1>
-        </ProtectedRoute>
-        <ProtectedRoute path="/quotes" exact={true}>
           <Quotes />
         </ProtectedRoute>
         <ProtectedRoute path="/quotes/:id" exact={true}>
           <Game />
         </ProtectedRoute>
+        <Route>
+          <h1>Page Not Found</h1>
+        </Route>
       </Switch>
     </BrowserRouter>
   );

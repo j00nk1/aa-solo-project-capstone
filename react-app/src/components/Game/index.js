@@ -18,7 +18,7 @@ function Game() {
   const currQuote = quotesObj[quoteId];
 
   return (
-    <div>
+    <div className="container">
       <div>
         <h1>{currQuote?.author}</h1>
       </div>

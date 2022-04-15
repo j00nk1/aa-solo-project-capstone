@@ -27,10 +27,14 @@
   animation-iteration-count: infinite;
   animation-duration: 1s;
   transition: 0.12s;
-  border-left: 2px solid white;
+  border-left: 3px solid white;
 }
 
 .caret {
   position: absolute;
   display: inline;
+}
+
+.score_in_game {
+  font-weight: normal;
 }
