@@ -8,9 +8,17 @@ from app.models import Record, db
 
 record_routes = Blueprint("records", __name__)
 
+# WHOLE records
 @record_routes.route('/')
 def records():
   records = Record.query.all()
+  return {'records': [record.to_dict() for record in records]}
+
+
+# Session user's records
+@record_routes.route('/users/<int:user_id>/')
+def user_records(user_id):
+  records = Record.query.filter_by(Record.user_id == user_id).all()
   return {'records': [record.to_dict() for record in records]}
 
 

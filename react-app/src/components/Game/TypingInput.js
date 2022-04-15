@@ -5,7 +5,7 @@ import useTyping, { CharStateType, PhaseType } from "react-typing-game-hook";
 import {
   addRecordThunk,
   editRecordThunk,
-  getRecordsThunk,
+  getUserRecordsThunk,
 } from "../../store/records";
 
 function TypingInput({ text }) {
@@ -16,7 +16,7 @@ function TypingInput({ text }) {
   const recordList = useSelector(state => Object.values(state.records));
 
   useEffect(() => {
-    if (!recordList.length) dispatch(getRecordsThunk());
+    if (!recordList.length) dispatch(getUserRecordsThunk());
   }, [dispatch, recordList]);
 
   const currRecord = recordList.filter(
