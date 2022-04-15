@@ -10,14 +10,12 @@ record_routes = Blueprint("records", __name__)
 
 @record_routes.route('/')
 def records():
-  print("/////////////////")
   records = Record.query.all()
   return {'records': [record.to_dict() for record in records]}
 
 
 @record_routes.route('/<int:record_id>', methods=["PATCH"])
 def update_record(record_id):
-  print("********************")
   form = RecordForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
