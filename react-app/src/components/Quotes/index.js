@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
+import { getRecordsThunk } from "../../store/records";
 
 function Quotes() {
   const dispatch = useDispatch();
@@ -11,9 +12,24 @@ function Quotes() {
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
   const { id } = sessionUser;
+  const recordList = useSelector(state => Object.values(state.records)).filter(
+    record => record.user_id === id
+  );
+
+  const hasPlayed = (id, records = recordList) => {
+    let bool = false;
+    records.forEach(record => {
+      if (record.quote_id === id) bool = true;
+    });
+    return bool;
+  };
 
   useEffect(() => {
     dispatch(getQuotesThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getRecordsThunk());
   }, [dispatch]);
 
   return (
@@ -34,7 +50,9 @@ function Quotes() {
                 <td>{quote.char_count}</td>
                 <td>
                   <button>
-                    <NavLink to={`/quotes/${quote.id}`}>Play</NavLink>
+                    <NavLink to={`/quotes/${quote.id}`}>
+                      {hasPlayed(quote.id) ? "Play again" : "Play"}
+                    </NavLink>
                   </button>
                 </td>
               </tr>

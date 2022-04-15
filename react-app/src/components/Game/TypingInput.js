@@ -1,7 +1,27 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import useTyping, { CharStateType, PhaseType } from "react-typing-game-hook";
+import {
+  addRecordThunk,
+  editRecordThunk,
+  getRecordsThunk,
+} from "../../store/records";
 
 function TypingInput({ text }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const user_id = sessionUser.id;
+  const recordList = useSelector(state => Object.values(state.records));
+
+  useEffect(() => {
+    if (!recordList.length) dispatch(getRecordsThunk());
+  }, [dispatch, recordList]);
+
+  const currRecord = recordList.filter(
+    record => record.user_id === user_id && record.quote_id === text?.id
+  );
   const [isFocused, setIsFocused] = useState(false);
   const letterElements = useRef(null); // to access the element, letterElements.current
 
@@ -9,7 +29,9 @@ function TypingInput({ text }) {
   const [time, setTime] = useState("0:00");
   // for recording purpose
   const [wpm, setWpm] = useState(0);
-  const [recordDuration, setRecordDuration] = useState(0);
+  const [duration, setRecordDuration] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [disable, setDisable] = useState(true);
 
   // destructure from useTyping packet
   const {
@@ -47,7 +69,7 @@ function TypingInput({ text }) {
     }
   }, [currIndex]);
 
-  //set WPM
+  //set WPM, duration, accuracy
   useEffect(() => {
     if (phase === PhaseType.Ended && endTime && startTime) {
       const dur = endTime - startTime;
@@ -57,11 +79,13 @@ function TypingInput({ text }) {
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
       setRecordDuration(dur); // for recording duration
+      setAccuracy(+((correctChar / text.content.length) * 100).toFixed(2)); // toFixed returns STRING
+      setDisable(false);
       setWpm(Math.round(((60 / durInSec) * correctChar) / 5));
     } else {
       setTime(0);
     }
-  }, [phase, startTime, endTime, correctChar]);
+  }, [phase, startTime, endTime, correctChar, text?.content.length]);
 
   //handle key presses
   const handleKeyDown = (letter, control) => {
@@ -74,6 +98,39 @@ function TypingInput({ text }) {
       // if the pressed key's val is a single char
       insertTyping(letter);
     }
+  };
+
+  // new submission
+  const newSubmit = async () => {
+    const record = {
+      user_id,
+      quote_id: text.id,
+      accuracy,
+      duration,
+      wpm,
+    };
+
+    await dispatch(addRecordThunk(record));
+
+    await history.push("/quotes");
+  };
+
+  const update = async () => {
+    const record = {
+      id: currRecord[0].id,
+      user_id,
+      quote_id: text.id,
+      accuracy,
+      duration,
+      wpm,
+    };
+
+    await dispatch(editRecordThunk(record));
+    await history.push("/quotes");
+  };
+
+  const back = () => {
+    history.push("/quotes");
   };
 
   return (
@@ -120,10 +177,7 @@ function TypingInput({ text }) {
         {phase === PhaseType.Ended && startTime && endTime ? (
           <>
             <li>WPM: {wpm}</li>
-            <li>
-              Accuracy: {((correctChar / text.content.length) * 100).toFixed(2)}
-              %
-            </li>
+            <li>Accuracy: {accuracy}%</li>
             <li>Duration: {time}</li>
           </>
         ) : null}
@@ -131,6 +185,16 @@ function TypingInput({ text }) {
         <li> Correct Characters: {correctChar}</li>
         <li> Error Characters: {errorChar}</li>
       </ul>
+      {!currRecord.length ? (
+        <button onClick={newSubmit} disabled={disable}>
+          Submit
+        </button>
+      ) : (
+        <button onClick={update} disabled={disable}>
+          Update Score
+        </button>
+      )}
+      <button onClick={back}>Back to quote list</button>
     </div>
   );
 }

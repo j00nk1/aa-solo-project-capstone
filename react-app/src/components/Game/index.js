@@ -6,7 +6,7 @@ import TypingInput from "./TypingInput";
 import { getQuotesThunk } from "../../store/quotes";
 import "./Game.css";
 
-function Test() {
+function Game() {
   const dispatch = useDispatch();
   const quoteId = useParams().id;
   const quotesObj = useSelector(state => state.quotes);
@@ -33,4 +33,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default Game;

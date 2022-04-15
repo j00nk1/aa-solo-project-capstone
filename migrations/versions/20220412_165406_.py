@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('quote_id', sa.Integer(), nullable=False),
-    sa.Column('accuracy', sa.Integer(), nullable=False),
+    sa.Column('accuracy', sa.Float(2), nullable=False),
     sa.Column('duration', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
