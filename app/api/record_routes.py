@@ -13,7 +13,7 @@ def records():
   return {'records': [record.to_dict() for record in records]}
 
 
-@record_routes.route('/<int:quote_id>')
+@record_routes.route('/<int:record_id>')
 def record(quote_id):
   return {"quote_id": quote_id}
   # form = RecordForm()

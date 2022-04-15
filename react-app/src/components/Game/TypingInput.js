@@ -2,13 +2,26 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useTyping, { CharStateType, PhaseType } from "react-typing-game-hook";
-import { addRecordThunk } from "../../store/records";
+import {
+  addRecordThunk,
+  editRecordThunk,
+  getRecordsThunk,
+} from "../../store/records";
 
 function TypingInput({ text }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const user_id = sessionUser.id;
+  const recordList = useSelector(state => Object.values(state.records));
+
+  useEffect(() => {
+    if (!recordList.length) dispatch(getRecordsThunk());
+  }, [dispatch, recordList]);
+
+  const currRecord = recordList.filter(
+    record => record.user_id === user_id && record.quote_id === text?.id
+  );
   const [isFocused, setIsFocused] = useState(false);
   const letterElements = useRef(null); // to access the element, letterElements.current
 
@@ -87,8 +100,8 @@ function TypingInput({ text }) {
     }
   };
 
-  // submission
-  const submit = () => {
+  // new submission
+  const newSubmit = async () => {
     const record = {
       user_id,
       quote_id: text.id,
@@ -97,9 +110,23 @@ function TypingInput({ text }) {
       wpm,
     };
 
-    dispatch(addRecordThunk(record));
+    await dispatch(addRecordThunk(record));
 
-    setDisable(true); // disable submission OR redirect to other page
+    await history.push("/quotes");
+  };
+
+  const update = async () => {
+    const record = {
+      id: currRecord[0].id,
+      user_id,
+      quote_id: text.id,
+      accuracy,
+      duration,
+      wpm,
+    };
+
+    await dispatch(editRecordThunk(record));
+    await history.push("/quotes");
   };
 
   const back = () => {
@@ -158,9 +185,15 @@ function TypingInput({ text }) {
         <li> Correct Characters: {correctChar}</li>
         <li> Error Characters: {errorChar}</li>
       </ul>
-      <button onClick={submit} disabled={disable}>
-        Submit
-      </button>
+      {!currRecord.length ? (
+        <button onClick={newSubmit} disabled={disable}>
+          Submit
+        </button>
+      ) : (
+        <button onClick={update} disabled={disable}>
+          Update Score
+        </button>
+      )}
       <button onClick={back}>Back to quote list</button>
     </div>
   );

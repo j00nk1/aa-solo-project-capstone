@@ -22,7 +22,6 @@ def quote(id):
 def records(id):
   form = RecordForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  print(form.data, "****************")
   if form.validate_on_submit():
     record = Record(
       user_id = form.data["user_id"],
