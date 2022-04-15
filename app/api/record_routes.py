@@ -14,7 +14,7 @@ def records():
   return {'records': [record.to_dict() for record in records]}
 
 
-@record_routes.route('/<int:record_id>', methods=["PATCH"])
+@record_routes.route('/<int:record_id>/', methods=["PATCH"])
 def update_record(record_id):
   form = RecordForm()
   form['csrf_token'].data = request.cookies['csrf_token']
@@ -31,7 +31,7 @@ def update_record(record_id):
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-@record_routes.route('/<int:record_id>', methods=["DELETE"])
+@record_routes.route('/<int:record_id>/', methods=["DELETE"])
 def delete_reccord(record_id):
   deleted_record = Record.query.get(record_id)
   db.session.delete(deleted_record)

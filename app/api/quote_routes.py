@@ -13,12 +13,12 @@ def quotes():
   return {'quotes': [quote.to_dict() for quote in quotes]}
 
 
-@quote_routes.route('/<int:id>')
+@quote_routes.route('/<int:id>/')
 def quote(id):
   quote = Quote.query.get(id)
   return {'quote': quote.to_dict()}
 
-@quote_routes.route('/<int:id>/records', methods=["POST"])
+@quote_routes.route('/<int:id>/records/', methods=["POST"])
 def records(id):
   form = RecordForm()
   form['csrf_token'].data = request.cookies['csrf_token']
