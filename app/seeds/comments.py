@@ -10,7 +10,7 @@ def seed_comments():
     data = [
         Comment(
             user_id=randint(1, 10),
-            record_id=randint(1, 100),
+            record_id=randint(1, 51),
             content=lorem.sentence(),
         )
         for x in range(50)
