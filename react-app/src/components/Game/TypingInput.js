@@ -176,9 +176,9 @@ function TypingInput({ text }) {
       <ul>
         {phase === PhaseType.Ended && startTime && endTime ? (
           <>
-            <li>WPM: {wpm}</li>
-            <li>Accuracy: {accuracy}%</li>
-            <li>Duration: {time}</li>
+            <li className="wpm score_in_game">WPM: {wpm}</li>
+            <li className="acc score_in_game">Accuracy: {accuracy}%</li>
+            <li className="dur score_in_game">Duration: {time}</li>
           </>
         ) : null}
         <li> Current Index: {currIndex}</li>

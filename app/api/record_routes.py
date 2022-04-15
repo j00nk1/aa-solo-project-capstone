@@ -29,3 +29,11 @@ def update_record(record_id):
     db.session.commit()
     return record.to_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@record_routes.route('/<int:record_id>', methods=["DELETE"])
+def delete_reccord(record_id):
+  deleted_record = Record.query.get(record_id)
+  db.session.delete(deleted_record)
+  db.session.commit()
+  return deleted_record.to_dict()

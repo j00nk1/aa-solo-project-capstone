@@ -19,7 +19,7 @@ def seed_records():
             duration=randint(10000, 21000),
             wpm=randint(30, 90)
         )
-        for x in range(100)
+        for x in range(50)
     ]
 
     db.session.add_all(data)
