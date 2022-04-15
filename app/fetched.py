@@ -299,4 +299,10 @@ fetched_quotes = [
         "c": "91",
         "h": "<blockquote>&ldquo;Change the changeable, accept the unchangeable, and remove yourself from the unacceptable. &rdquo; &mdash; <footer>Denis Waitley</footer></blockquote>",
     },
+    {
+        "q": "If you can't love yourself, how in the hell you gonna love somebody else? Can I get an amen?",
+        "a": "RuPaul",
+        "c": "92",
+        "h":"<blockquote>&ldquo;If you can't love yourself, how in the hell you gonna love somebody else? Can I get an amen? &rdquo; &mdash; <footer>RuPaul</footer></blockquote>"
+    }
 ]

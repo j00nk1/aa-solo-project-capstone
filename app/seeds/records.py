@@ -4,7 +4,7 @@ from random import randint, uniform
 
 def seed_records():
     user_ids = list(range(1,11))
-    quote_ids = list(range(1, 51))
+    quote_ids = list(range(1, 52))
     
     def num_picker(i, ids):
         idAt = i % len(ids)
@@ -19,7 +19,7 @@ def seed_records():
             duration=randint(10000, 21000),
             wpm=randint(30, 90)
         )
-        for x in range(50)
+        for x in range(51)
     ]
 
     db.session.add_all(data)

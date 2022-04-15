@@ -132,6 +132,20 @@ nav .container_row {
   padding: 1rem;
   border-radius: 1rem;
   gap: 2rem;
+  max-height: 85vh;
+  overflow-y: scroll;
+}
+
+.quotes_container::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 5px;
+  height: 90%;
+}
+
+.quotes_container::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border: 1px solid rgb(75, 75, 75);
+  border-radius: 20px;
 }
 
 .quote_card {
