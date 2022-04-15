@@ -11,7 +11,7 @@ const getQuotes = quotes => {
 // -------------------THUNK ----------------
 
 export const getQuotesThunk = () => async dispatch => {
-  const res = await fetch(`/api/quotes`);
+  const res = await fetch(`/api/quotes/`);
   const data = await res.json();
   dispatch(getQuotes(data));
   return data;
