@@ -12,7 +12,11 @@ function Quotes() {
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
   const { id } = sessionUser;
-  const recordList = useSelector(state => Object.values(state.records)).filter(
+  const recordObj = useSelector(state => state.records);
+  useEffect(() => {
+    if (!Object.keys(recordObj).length) dispatch(getRecordsThunk());
+  }, [dispatch, recordObj]);
+  const recordList = Object.values(recordObj).filter(
     record => record.user_id === id
   );
 
@@ -28,37 +32,35 @@ function Quotes() {
     dispatch(getQuotesThunk());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getRecordsThunk());
-  }, [dispatch]);
-
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Author</th>
-            <th>Characters</th>
-            <th></th>
-          </tr>
-        </thead>
-        {quoteList.length > 0 &&
-          quoteList.map(quote => (
-            <tbody key={quote.id}>
-              <tr style={{ textAlign: "center" }}>
-                <td>{quote.author}</td>
-                <td>{quote.char_count}</td>
-                <td>
-                  <button>
-                    <NavLink to={`/quotes/${quote.id}`}>
-                      {hasPlayed(quote.id) ? "Play again" : "Play"}
-                    </NavLink>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          ))}
-      </table>
+    <div className="quotes_container container_col">
+      <h1 style={{ textAlign: "center" }}>All Quotes</h1>
+      {quoteList.length > 0 &&
+        quoteList.map(quote => (
+          <div key={quote.id} className="quote_card container_row">
+            <div>
+              <h2>{quote.author}</h2>
+              <p>{quote.char_count} characters</p>
+            </div>
+            <ul className="record_list container_row">
+              {hasPlayed(quote.id) && (
+                <>
+                  <li>{recordObj[quote.id].wpm + " WPM"}</li>
+                  <li>Accuracy: {recordObj[quote.id].accuracy}%</li>
+                  <li>
+                    Duration:
+                    {(recordObj[quote.id].duration / 1000).toFixed(2) + "s"}
+                  </li>
+                </>
+              )}
+            </ul>
+            <button>
+              <NavLink to={`/quotes/${quote.id}`}>
+                {hasPlayed(quote.id) ? "Play again" : "Play"}
+              </NavLink>
+            </button>
+          </div>
+        ))}
     </div>
   );
 }
