@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, FloatField, TimeField
+from wtforms import IntegerField, FloatField
 from wtforms.validators import DataRequired
 
 class RecordForm(FlaskForm):
@@ -8,4 +8,3 @@ class RecordForm(FlaskForm):
   accuracy = FloatField("accuracy", validators=[DataRequired()])
   duration = IntegerField("duration", validators=[DataRequired()])
   wpm = IntegerField("wpm", validators=[DataRequired()])
-  updated_at = TimeField("updated_at")

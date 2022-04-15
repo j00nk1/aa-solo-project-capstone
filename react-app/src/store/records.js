@@ -53,7 +53,7 @@ export const addRecordThunk = record => async dispatch => {
 
 export const editRecordThunk = record => async dispatch => {
   const record_id = record.id;
-  const res = await fetch(`api/records/${record_id}`, {
+  const res = await fetch(`/api/records/${record_id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(record),
@@ -64,7 +64,7 @@ export const editRecordThunk = record => async dispatch => {
 };
 
 export const deleteRecordThunk = id => async dispatch => {
-  const res = await fetch(`api/records/${id}`, {
+  const res = await fetch(`/api/records/${id}`, {
     method: "DELETE",
   });
 
