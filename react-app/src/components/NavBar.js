@@ -14,7 +14,11 @@ const NavBar = () => {
   return (
     <nav className="light_gray">
       <div>
-        <h1>Quote Typing</h1>
+        <h1>
+          <NavLink to="/" exact={true} activeClassName="active">
+            Quote Typing
+          </NavLink>
+        </h1>
       </div>
       <ul className="container_row">
         <li>
