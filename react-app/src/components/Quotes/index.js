@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -28,30 +28,32 @@ function Quotes() {
     dispatch(getQuotesThunk());
   }, [dispatch]);
 
+  let played;
   const hasPlayed = (id, records = recordList) => {
-    for (let i = 0; i < recordList.length; i++) {
-      const record = recordList[i];
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i];
       if (record.quote_id === id) {
         setScore(record);
         return true;
       }
     }
+    played = false;
     return false;
   };
 
   // since useState will rerender too many times in the nested loop,
   // use this method to set scores
-  let wpm, accuracy, duration;
+  let wpm, accuracy, duration, record_id;
   const setScore = rec => {
     wpm = rec.wpm;
     accuracy = rec.accuracy;
     duration = rec.duration;
+    record_id = rec.id;
+    played = true;
   };
 
-  const deleteBtn = async record_id => {
-    console.log("IS THIS WHAT I WANT TO DELETE?", record_id);
-    // const recordId = recordObj[quote_id]?.id;
-    // await dispatch(deleteRecordThunk(recordId));
+  const deleteBtn = async rec_id => {
+    await dispatch(deleteRecordThunk(rec_id));
   };
 
   return (
@@ -72,6 +74,12 @@ function Quotes() {
                       Duration:
                       {(duration / 1000).toFixed(2) + "s"}
                     </li>
+                    {/* <button
+                      value={record_id}
+                      onClick={e => console.log(e.target.value)}
+                    >
+                      DELETE
+                    </button> */}
                   </>
                 )}
               </ul>
@@ -81,12 +89,13 @@ function Quotes() {
                 className="play_btn"
                 onClick={() => history.push(`/quotes/${quote.id}`)}
               >
-                {hasPlayed(quote.id) ? "Play again" : "Play"}
+                {played ? "Play again" : "Play"}
               </button>
-              {hasPlayed(quote.id) && (
+              {played && (
                 <button
                   className="delete_btn"
-                  onClick={() => deleteBtn(quote.id)}
+                  value={record_id}
+                  onClick={e => deleteBtn(e.target.value)}
                 >
                   Delete
                 </button>
