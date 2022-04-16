@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
@@ -8,7 +8,6 @@ import { deleteRecordThunk, getUserRecordsThunk } from "../../store/records";
 
 function Quotes() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
@@ -87,9 +86,23 @@ function Quotes() {
             <div className="container_col btn_container">
               <button
                 className="play_btn"
-                onClick={() => history.push(`/quotes/${quote.id}`)}
+                // onClick={() => history.push(`/quotes/${quote.id}`)}
               >
-                {played ? "Play again" : "Play"}
+                {played ? (
+                  <NavLink
+                    to={{
+                      pathname: `/quotes/${quote.id}`,
+                      state: { wpm, accuracy, duration },
+                    }}
+                    style={{ width: "100%" }}
+                  >
+                    Play again
+                  </NavLink>
+                ) : (
+                  <NavLink to={`/quotes/${quote.id}`} style={{ width: "100%" }}>
+                    Play
+                  </NavLink>
+                )}
               </button>
               {played && (
                 <button
