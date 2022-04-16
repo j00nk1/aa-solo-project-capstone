@@ -1,4 +1,5 @@
 from datetime import datetime
+from math import floor
 
 from .db import db
 
@@ -25,6 +26,15 @@ class Record(db.Model):
     @property
     def score(self):
         return (self.wpm * self.accuracy)
+    
+    @property
+    def dur_time(self):
+        dur = self.duration
+        min = floor(dur/60000)
+        sec = (dur%60000)/1000
+        if sec < 10:
+            return f"{min}:0{sec}"
+        return f"{min}:{sec}"
 
     def to_dict(self):
         return {
@@ -37,6 +47,7 @@ class Record(db.Model):
             "duration": self.duration,
             "wpm": self.wpm,
             "score": self.score,
+            "dur_time": self.dur_time,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
