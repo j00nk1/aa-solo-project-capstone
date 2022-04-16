@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
-import { deleteRecordThunk, getRecordsThunk } from "../../store/records";
+import { deleteRecordThunk, getUserRecordsThunk } from "../../store/records";
 
 function Quotes() {
   const dispatch = useDispatch();
@@ -12,34 +12,48 @@ function Quotes() {
 
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
+  // const [wpm, setWpm] = useState(0);
+  // const [accuracy, setAccuracy] = useState(0);
+  // const [duration, setDuration] = useState(0);
+
   const user_id = sessionUser.id;
   const recordObj = useSelector(state => state.records);
   useEffect(() => {
-    dispatch(getRecordsThunk());
-  }, [dispatch]);
-  const recordList = Object.values(recordObj).filter(
-    record => record.user_id === user_id
-  );
+    dispatch(getUserRecordsThunk(user_id));
+  }, [dispatch, user_id]);
+
+  const recordList = Object.values(recordObj);
 
   useEffect(() => {
     dispatch(getQuotesThunk());
   }, [dispatch]);
 
+  let played;
   const hasPlayed = (id, records = recordList) => {
-    let bool = false;
-    records.forEach(record => {
-      if (record.quote_id === id && record.user_id === user_id) {
-        console.log(record);
-        bool = true;
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i];
+      if (record.quote_id === id) {
+        setScore(record);
+        return true;
       }
-    });
-    return bool;
+    }
+    played = false;
+    return false;
   };
 
-  const deleteBtn = async quote_id => {
-    const recordId = recordObj[quote_id]?.id;
-    await dispatch(deleteRecordThunk(recordId));
-    hasPlayed(quote_id);
+  // since useState will rerender too many times in the nested loop,
+  // use this method to set scores
+  let wpm, accuracy, duration, record_id;
+  const setScore = rec => {
+    wpm = rec.wpm;
+    accuracy = rec.accuracy;
+    duration = rec.duration;
+    record_id = rec.id;
+    played = true;
+  };
+
+  const deleteBtn = async rec_id => {
+    await dispatch(deleteRecordThunk(rec_id));
   };
 
   return (
@@ -54,14 +68,18 @@ function Quotes() {
               <ul className="record_list container_row">
                 {hasPlayed(quote.id) && (
                   <>
-                    <li className="wpm">{recordObj[quote.id]?.wpm + " WPM"}</li>
-                    <li className="acc">
-                      Accuracy: {recordObj[quote.id]?.accuracy}%
-                    </li>
+                    <li className="wpm">{`${wpm}WPM`}</li>
+                    <li className="acc">Accuracy: {accuracy}%</li>
                     <li className="dur">
                       Duration:
-                      {(recordObj[quote.id]?.duration / 1000).toFixed(2) + "s"}
+                      {(duration / 1000).toFixed(2) + "s"}
                     </li>
+                    {/* <button
+                      value={record_id}
+                      onClick={e => console.log(e.target.value)}
+                    >
+                      DELETE
+                    </button> */}
                   </>
                 )}
               </ul>
@@ -71,12 +89,13 @@ function Quotes() {
                 className="play_btn"
                 onClick={() => history.push(`/quotes/${quote.id}`)}
               >
-                {hasPlayed(quote.id) ? "Play again" : "Play"}
+                {played ? "Play again" : "Play"}
               </button>
-              {hasPlayed(quote.id) && (
+              {played && (
                 <button
                   className="delete_btn"
-                  onClick={() => deleteBtn(quote.id)}
+                  value={record_id}
+                  onClick={e => deleteBtn(e.target.value)}
                 >
                   Delete
                 </button>

@@ -12,9 +12,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    records = db.relationship("Record", back_populates="user")
+    records = db.relationship("Record", cascade="all,delete", back_populates="user")
 
-    comments = db.relationship("Comment", back_populates="user")
+    comments = db.relationship("Comment", cascade="all,delete", back_populates="user")
 
     @property
     def password(self):

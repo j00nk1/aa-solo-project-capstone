@@ -20,7 +20,7 @@ class Record(db.Model):
     user = db.relationship("User", back_populates="records")
     quote = db.relationship("Quote", back_populates="records")
 
-    comments = db.relationship("Comment", back_populates="record")
+    comments = db.relationship("Comment", cascade="all,delete", back_populates="record")
     
     @property
     def score(self):

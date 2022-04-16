@@ -10,7 +10,7 @@ class Quote(db.Model):
     content = db.Column(db.Text, nullable=False)
     char_count = db.Column(db.Integer, nullable=False)
 
-    records = db.relationship("Record", back_populates="quote")
+    records = db.relationship("Record", cascade="all,delete", back_populates="quote")
 
     def to_dict(self):
         return {
