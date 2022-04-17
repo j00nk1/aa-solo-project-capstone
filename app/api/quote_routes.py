@@ -17,6 +17,7 @@ def quote(id):
   quote = Quote.query.get(id)
   return {'quote': quote.to_dict()}
 
+# POST a record
 @quote_routes.route('/<int:id>/records/', methods=["POST"])
 def records(id):
   form = RecordForm()

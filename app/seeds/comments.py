@@ -3,7 +3,6 @@ import lorem
 
 from app.models import db, Comment
 
-print()
 
 
 def seed_comments():
