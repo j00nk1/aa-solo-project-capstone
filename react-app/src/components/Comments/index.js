@@ -27,7 +27,7 @@ function Comments({ record_id }) {
           value={comment}
           onChange={e => setComment(e.target.value)}
           style={{ width: "100%" }}
-          placeholder="Write a comment..."
+          placeholder="Write a comment & hit enter to submit"
         />
       </form>
       {/* TODO: render comments */}

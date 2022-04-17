@@ -60,7 +60,8 @@ function Quotes() {
           <div key={quote.id} className="quote_card container_row">
             <div>
               <h2>{quote.author}</h2>
-              <p>{quote.char_count} characters</p>
+              <blockquote>{quote.content}</blockquote>
+              <small>{quote.char_count} characters</small>
               <ul className="record_list container_row">
                 {hasPlayed(quote.id) && (
                   <>
