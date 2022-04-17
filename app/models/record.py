@@ -25,6 +25,12 @@ class Record(db.Model):
     @property
     def score(self):
         return (self.wpm * self.accuracy)
+    
+    @property
+    def dur_time(self):
+        dur = self.duration
+        sec = (dur)/1000
+        return sec
 
     def to_dict(self):
         return {
@@ -37,6 +43,7 @@ class Record(db.Model):
             "duration": self.duration,
             "wpm": self.wpm,
             "score": self.score,
+            "dur_time": self.dur_time,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
