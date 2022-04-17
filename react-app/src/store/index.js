@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import session from "./session";
 import quotes from "./quotes";
 import records from "./records";
+import comments from "./comments";
 
 const rootReducer = combineReducers({
   session,
   quotes,
   records,
+  comments,
 });
 
 let enhancer;

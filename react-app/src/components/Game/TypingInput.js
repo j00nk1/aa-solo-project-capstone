@@ -73,9 +73,7 @@ function TypingInput({ text }) {
   useEffect(() => {
     if (phase === PhaseType.Ended && endTime && startTime) {
       const dur = endTime - startTime;
-      const min = Math.floor(dur / 60000); // convert it into min
-      const sec = (dur % 60000) / 1000; // convert it into sec
-      const time = min + ":" + (sec < 10 ? "0" : "") + sec;
+      const time = (dur % 60000) / 1000; // convert it into sec
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
       setRecordDuration(dur); // for recording duration
@@ -141,11 +139,7 @@ function TypingInput({ text }) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       >
-        <div
-          ref={letterElements}
-          tabIndex={0}
-          style={{ marginBottom: 10, border: "1px solid white", padding: 10 }}
-        >
+        <div ref={letterElements} tabIndex={0} className="text_container">
           {text?.content.split("").map((letter, index) => {
             let state = charsState[index];
             let color =
@@ -178,7 +172,7 @@ function TypingInput({ text }) {
           <>
             <li className="wpm score_in_game">WPM: {wpm}</li>
             <li className="acc score_in_game">Accuracy: {accuracy}%</li>
-            <li className="dur score_in_game">Duration: {time}</li>
+            <li className="dur score_in_game">Duration: {time}s</li>
           </>
         ) : null}
         <li> Current Index: {currIndex}</li>

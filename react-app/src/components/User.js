@@ -68,9 +68,7 @@ function User() {
                   <ul className="record_list container_row">
                     <p className="wpm">{record.wpm}WPM</p>
                     <p className="acc">Accuracy: {record.accuracy}%</p>
-                    <p className="dur">
-                      Duration: {(record.duration / 1000).toFixed(2) + "s"}
-                    </p>
+                    <p className="dur">Duration: {record.dur_time}s</p>
                   </ul>
                 </div>
                 <div className="container_col btn_container">
@@ -84,7 +82,7 @@ function User() {
                         state: {
                           wpm: record.wpm,
                           accuracy: record.accuracy,
-                          duration: record.duration,
+                          duration: record.dur_time,
                         },
                       }}
                       style={{ width: "100%" }}
@@ -106,7 +104,7 @@ function User() {
                 className="container_col"
                 style={{ margin: "1rem auto" }}
               >
-                <Comments />
+                <Comments record_id={record.id} />
               </div>
             </div>
           ))}

@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecordCommentsThunk } from "../../store/comments";
 
-function Comments() {
+function Comments({ record_id }) {
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
+  const record_comments = useSelector(state => state.comments);
+
+  useEffect(() => {
+    dispatch(getRecordCommentsThunk(record_id));
+  }, [dispatch, record_id]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(comment);
-    // WIP save comment
+    // TODO: save comment
   };
   return (
     <>
@@ -18,7 +26,7 @@ function Comments() {
           placeholder="Write a comment..."
         />
       </form>
-      {/* WIP render comments */}
+      {/* TODO: render comments */}
     </>
   );
 }

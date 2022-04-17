@@ -11,9 +11,6 @@ function Quotes() {
 
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
-  // const [wpm, setWpm] = useState(0);
-  // const [accuracy, setAccuracy] = useState(0);
-  // const [duration, setDuration] = useState(0);
 
   const user_id = sessionUser.id;
   const recordObj = useSelector(state => state.records);
@@ -46,7 +43,7 @@ function Quotes() {
   const setScore = rec => {
     wpm = rec.wpm;
     accuracy = rec.accuracy;
-    duration = rec.duration;
+    duration = rec.dur_time;
     record_id = rec.id;
     played = true;
   };
@@ -69,10 +66,7 @@ function Quotes() {
                   <>
                     <li className="wpm">{`${wpm}WPM`}</li>
                     <li className="acc">Accuracy: {accuracy}%</li>
-                    <li className="dur">
-                      Duration:
-                      {(duration / 1000).toFixed(2) + "s"}
-                    </li>
+                    <li className="dur">Duration: {duration}s</li>
                     {/* <button
                       value={record_id}
                       onClick={e => console.log(e.target.value)}

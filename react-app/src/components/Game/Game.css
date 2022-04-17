@@ -1,9 +1,9 @@
 .red {
-  color: red;
+  background-color: crimson;
 }
 
 .green {
-  color: green;
+  color: #0bb981;
 }
 
 .grey {
@@ -27,7 +27,7 @@
   animation-iteration-count: infinite;
   animation-duration: 1s;
   transition: 0.12s;
-  border-left: 3px solid white;
+  border-left: 1px solid white;
 }
 
 .caret {
@@ -37,4 +37,17 @@
 
 .score_in_game {
   font-weight: normal;
+}
+
+.text_container {
+  margin: 1rem auto;
+  border: 1px solid white;
+  padding: 1rem 0.5rem;
+  word-spacing: 2px;
+  font-size: large;
+}
+
+.text_container:focus {
+  border: 1.5px solid coral;
+  background-color: rgba(185, 176, 176, 0.089);
 }

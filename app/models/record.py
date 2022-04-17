@@ -1,5 +1,4 @@
 from datetime import datetime
-from math import floor
 
 from .db import db
 
@@ -30,11 +29,8 @@ class Record(db.Model):
     @property
     def dur_time(self):
         dur = self.duration
-        min = floor(dur/60000)
-        sec = (dur%60000)/1000
-        if sec < 10:
-            return f"{min}:0{sec}"
-        return f"{min}:{sec}"
+        sec = (dur)/1000
+        return sec
 
     def to_dict(self):
         return {
