@@ -16,6 +16,8 @@ def comments():
 # Record's comments
 @comment_routes.route('/records/<int:record_id>/')
 def record_comments(record_id):
-  print("IN COMMENT ROUTE ======================", record_id)
   comments = Comment.query.filter_by(record_id = record_id)
   return {'comments': [comment.to_dict() for comment in comments]}
+
+
+# @comment_routes.route("/records/")

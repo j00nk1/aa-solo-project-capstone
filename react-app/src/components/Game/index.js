@@ -12,7 +12,6 @@ function Game() {
   const dispatch = useDispatch();
   const quoteId = useParams().id;
   const quotesObj = useSelector(state => state.quotes);
-  console.log(score);
 
   useEffect(() => {
     dispatch(getQuotesThunk());

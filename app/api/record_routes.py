@@ -2,8 +2,8 @@ from datetime import datetime
 from flask import Blueprint, request
 
 # from app.api.auth_routes import validation_errors_to_error_messages
-from app.forms.record_form import RecordForm
-from app.models import Record, db
+from app.forms import RecordForm, CommentForm
+from app.models import Record, db, Comment
 
 record_routes = Blueprint("records", __name__)
 
@@ -43,3 +43,21 @@ def delete_reccord(record_id):
   db.session.delete(deleted_record)
   db.session.commit()
   return deleted_record.to_dict()
+
+
+# POST comments under the record
+@record_routes.route('/<int:record_id>/comments/', methods=["POST"])
+def post_comment(record_id):
+  form = CommentForm()
+  # form['csrf_token'].data = request.cookies['csrf_token']
+  # if form.validate_on_submit():
+  comment = Comment(
+    user_id = form.data["user_id"],
+    record_id = record_id,
+    content=form.data["content"],
+  )
+  
+  db.session.add(comment)
+  db.session.commit()
+  return comment.to_dict()
+  # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
