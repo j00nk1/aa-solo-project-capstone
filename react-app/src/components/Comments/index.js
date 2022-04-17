@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { addCommentThunk, getRecordCommentsThunk } from "../../store/comments";
+import "./Comments.css";
 
 function Comments({ record_id }) {
   const history = useHistory();
@@ -14,10 +15,6 @@ function Comments({ record_id }) {
     comment => comment.record_id === record_id
   );
   const userObj = useSelector(state => state.users);
-
-  const user_profile = async user_id => {
-    history.push(`/users/${user_id}`);
-  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -54,12 +51,24 @@ function Comments({ record_id }) {
 
       {commentList.length > 0 &&
         commentList.map(comment => (
-          <ul key={comment.content + "userId"}>
-            <li onClick={() => user_profile(userObj[comment.user_id]?.id)}>
-              {userObj[comment.user_id]?.username}
-            </li>
-            <li>{comment.content}</li>
-          </ul>
+          <div key={comment.content + "userId"} className="comment_container">
+            <div>
+              <NavLink
+                to={`/users/${userObj[comment.user_id]?.id}`}
+                className="user_profile_link"
+              >
+                {userObj[comment.user_id]?.username}
+              </NavLink>
+              <p>{comment.content}</p>
+            </div>
+            {/* TODO: allow the record holder to delete the comments? */}
+            {comment.user_id === sessionUser.id && (
+              <div className="btn_container">
+                <button className="edit_btn">Edit</button>
+                <button className="delete_btn">Delete</button>
+              </div>
+            )}
+          </div>
         ))}
     </>
   );

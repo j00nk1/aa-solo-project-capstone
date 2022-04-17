@@ -64,6 +64,7 @@ html {
     #1e1c1e 100%
   );
   color: white;
+  min-width: 600px;
 }
 
 .auth_container_center {
@@ -132,7 +133,8 @@ nav .container_row {
 .quotes_container {
   background-color: #323236;
   width: 90%;
-  max-width: 90vw;
+  max-width: 1000px;
+  min-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
   border-radius: 1rem;

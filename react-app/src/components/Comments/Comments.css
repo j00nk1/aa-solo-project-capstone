@@ -1,0 +1,9 @@
+a.user_profile_link {
+  text-decoration: underline;
+  text-decoration-color: aqua;
+}
+
+.user_profile_link:hover {
+  text-decoration: none;
+  color: aqua;
+}
