@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getRecordCommentsThunk } from "../../store/comments";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Comments({ record_id }) {
+  const history = useHistory();
   const [comment, setComment] = useState("");
-  const dispatch = useDispatch();
-  const record_comments = useSelector(state => state.comments);
+  const commentObj = useSelector(state => state.comments);
+  const commentList = Object.values(commentObj).filter(
+    comment => comment.record_id === record_id
+  );
+  const userObj = useSelector(state => state.users);
 
-  useEffect(() => {
-    dispatch(getRecordCommentsThunk(record_id));
-  }, [dispatch, record_id]);
+  const user_profile = async user_id => {
+    history.push(`/users/${user_id}`);
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -27,6 +31,16 @@ function Comments({ record_id }) {
         />
       </form>
       {/* TODO: render comments */}
+
+      {commentList.length > 0 &&
+        commentList.map(comment => (
+          <ul key={comment.content + "userId"}>
+            <li onClick={() => user_profile(userObj[comment.user_id]?.id)}>
+              {userObj[comment.user_id]?.username}
+            </li>
+            <li>{comment.content}</li>
+          </ul>
+        ))}
     </>
   );
 }

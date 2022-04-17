@@ -4,12 +4,14 @@ import session from "./session";
 import quotes from "./quotes";
 import records from "./records";
 import comments from "./comments";
+import users from "./users";
 
 const rootReducer = combineReducers({
   session,
   quotes,
   records,
   comments,
+  users,
 });
 
 let enhancer;

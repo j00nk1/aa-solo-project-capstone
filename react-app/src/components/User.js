@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
+import { getCommentsThunk } from "../store/comments";
 import { getQuotesThunk } from "../store/quotes";
 import { deleteRecordThunk, getUserRecordsThunk } from "../store/records";
+import { getUsersThunk } from "../store/users";
 import Comments from "./Comments";
 
 function User() {
@@ -24,13 +26,22 @@ function User() {
   }, [userId]);
 
   useEffect(() => {
-    if (!Object.keys(quoteObj).length) dispatch(getQuotesThunk());
-  }, [dispatch, quoteObj]);
+    dispatch(getUsersThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const render = async () => await dispatch(getQuotesThunk());
+    render();
+  }, [dispatch]);
 
   useEffect(() => {
     const render = async () => await dispatch(getUserRecordsThunk(userId));
     render();
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    dispatch(getCommentsThunk());
+  }, [dispatch]);
 
   const deleteBtn = async rec_id => {
     await dispatch(deleteRecordThunk(rec_id));
@@ -63,8 +74,8 @@ function User() {
                 className="quote_card container_row"
               >
                 <div>
-                  <h2>{quoteObj[record.quote_id].author}</h2>
-                  <p>{quoteObj[record.quote_id].char_count} Characters</p>
+                  <h2>{quoteObj[record.quote_id]?.author}</h2>
+                  <p>{quoteObj[record.quote_id]?.char_count} Characters</p>
                   <ul className="record_list container_row">
                     <p className="wpm">{record.wpm}WPM</p>
                     <p className="acc">Accuracy: {record.accuracy}%</p>
@@ -78,7 +89,7 @@ function User() {
                   >
                     <NavLink
                       to={{
-                        pathname: `/quotes/${quoteObj[record.quote_id].id}`,
+                        pathname: `/quotes/${quoteObj[record.quote_id]?.id}`,
                         state: {
                           wpm: record.wpm,
                           accuracy: record.accuracy,
@@ -95,7 +106,7 @@ function User() {
                     value={record.id}
                     onClick={e => deleteBtn(e.target.value)}
                   >
-                    Delete
+                    Delete Score
                   </button>
                 </div>
               </div>
@@ -104,7 +115,10 @@ function User() {
                 className="container_col"
                 style={{ margin: "1rem auto" }}
               >
-                <Comments record_id={record.id} />
+                <Comments
+                  key={record.id + "comment_area"}
+                  record_id={record.id}
+                />
               </div>
             </div>
           ))}
