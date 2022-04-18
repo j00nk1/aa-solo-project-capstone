@@ -54,7 +54,7 @@ function EditView({ props }) {
         </NavLink>
         {!editMode ? (
           <>
-            <p style={{ padding: "0.5rem 1rem " }}>{comment?.content}</p>
+            <p className="comment_content">{comment?.content}</p>
             {/* TODO: allow the record holder to delete the comments? */}
             {comment?.user_id === sessionUser?.id && (
               <div className="btn_container">
@@ -81,10 +81,10 @@ function EditView({ props }) {
                 value={editedComment}
                 onChange={e => setEditedComment(e.target.value)}
               />
-              <button onClick={e => handleSubmit(e)}>
+              <button onClick={e => handleSubmit(e)} className="edit_btn">
                 <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
               </button>
-              <button onClick={cancelEditMode}>
+              <button onClick={cancelEditMode} className="cancel_btn">
                 <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
               </button>
             </form>

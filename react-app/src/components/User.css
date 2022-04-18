@@ -1,0 +1,29 @@
+.quotes_container.qc_in_profile {
+  max-height: none;
+  overflow-y: unset;
+}
+
+.head_line {
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.record_container {
+  margin-bottom: 2rem;
+}
+
+.comment_area {
+  margin: 1rem auto;
+}
+
+.each_comments {
+  padding: 2px 4px;
+}
+
+.comment_input {
+  width: 100%;
+}
+
+.comment_content {
+  padding: 0.5rem 1rem;
+}

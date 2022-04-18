@@ -215,6 +215,7 @@ button {
   transition: 0.5s;
 }
 
+.cancel_btn:hover,
 .delete_btn:hover {
   background-color: firebrick;
   color: white;

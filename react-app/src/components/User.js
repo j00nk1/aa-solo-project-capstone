@@ -6,6 +6,7 @@ import { getQuotesThunk } from "../store/quotes";
 import { deleteRecordThunk, getUserRecordsThunk } from "../store/records";
 import { getUsersThunk } from "../store/users";
 import Comments from "./Comments";
+import "./User.css";
 
 function User() {
   const dispatch = useDispatch();
@@ -44,10 +45,10 @@ function User() {
     dispatch(getCommentsThunk());
   }, [dispatch]);
 
-  //TODO: force scroll to the top of the container after render the profile page
+  // force scroll to the top of the page after render the profile page
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [userId]);
 
   const deleteBtn = async rec_id => {
     await dispatch(deleteRecordThunk(rec_id));
@@ -71,14 +72,12 @@ function User() {
         </li>
       </ul>
 
-      <div className="quotes_container">
-        <h1 style={{ textAlign: "center", margin: "1rem auto" }}>
-          {user.username}'s Record
-        </h1>
+      <div className="quotes_container qc_in_profile">
+        <h1 className="head_line">{user.username}'s Record</h1>
         <div className="quote_wrapper">
           {recordList.length > 0 &&
             recordList.map(record => (
-              <div key={record.id} style={{ marginBottom: "1.5rem" }}>
+              <div key={record.id} className="record_container">
                 <div
                   key={record.id + "quote_card"}
                   className="quote_card container_row"
@@ -131,8 +130,7 @@ function User() {
                 </div>
                 <div
                   key={record.id + "comment_area"}
-                  className="container_col"
-                  style={{ margin: "1rem auto" }}
+                  className="container_col comment_area"
                 >
                   <Comments
                     key={record.id + "comment_area"}

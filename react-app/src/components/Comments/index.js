@@ -43,7 +43,7 @@ function Comments({ record_id }) {
         <input
           value={comment}
           onChange={e => setComment(e.target.value)}
-          style={{ width: "100%" }}
+          className="comment_input"
           placeholder="Write a comment & hit enter to submit"
         />
         <small className="errors">{errors.length > 0 && errors}</small>
