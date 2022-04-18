@@ -89,12 +89,15 @@ function Quotes() {
                       pathname: `/quotes/${quote.id}`,
                       state: { wpm, accuracy, duration },
                     }}
-                    style={{ width: "100%" }}
+                    style={{ display: "inline-block", width: "100%" }}
                   >
                     Play again
                   </NavLink>
                 ) : (
-                  <NavLink to={`/quotes/${quote.id}`} style={{ width: "100%" }}>
+                  <NavLink
+                    to={`/quotes/${quote.id}`}
+                    style={{ display: "inline-block", width: "100%" }}
+                  >
                     Play
                   </NavLink>
                 )}

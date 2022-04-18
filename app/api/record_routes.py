@@ -30,7 +30,7 @@ def update_record(record_id):
   record.accuracy = form.data["accuracy"]
   record.duration=form.data["duration"]
   record.wpm=form.data["wpm"]
-  record.updated_at = datetime.now()
+  record.updated_at = datetime.utcnow()
   
   db.session.commit()
   return record.to_dict()

@@ -14,8 +14,8 @@ class Record(db.Model):
     # ended_at = db.Column(db.DateTime, nullable=False)
     duration = db.Column(db.BigInteger, nullable=False)  # Store duration in milliseconds
     wpm = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow())
+    updated_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow())
 
     user = db.relationship("User", back_populates="records")
     quote = db.relationship("Quote", back_populates="records")

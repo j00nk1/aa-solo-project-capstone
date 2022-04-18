@@ -1,3 +1,4 @@
+from crypt import methods
 from datetime import datetime
 from flask import Blueprint, request
 
@@ -20,4 +21,9 @@ def record_comments(record_id):
   return {'comments': [comment.to_dict() for comment in comments]}
 
 
-# @comment_routes.route("/records/")
+@comment_routes.route("/<int:comment_id>/", methods=['DELETE'])
+def delete_comment(comment_id):
+  comment = Comment.query.get(comment_id)
+  db.session.delete(comment)
+  return comment.to_dict()
+  
