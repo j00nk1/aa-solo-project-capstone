@@ -57,13 +57,13 @@ function TypingInput({ text }) {
       // these following lines will take care of the cursor position adjustment
       // offsetLeft => distance from the most left element to the current position
       // offsetWidth => each characters' width (ex. " " is 0, "m" is 8)
-      let left = spanRef.offsetLeft + spanRef.offsetWidth - 2;
+      let left = spanRef.offsetLeft + spanRef.offsetWidth;
       let top = spanRef.offsetTop - 2;
       return { left, top };
     } else {
       // initial cursor position
       return {
-        left: -2,
+        left: -1,
         top: 2,
       };
     }
@@ -175,9 +175,11 @@ function TypingInput({ text }) {
             <li className="dur score_in_game">Duration: {time}s</li>
           </>
         ) : null}
+        {/*👇 TODO: DELETE THIS BLOCK 👇 */}
         <li> Current Index: {currIndex}</li>
         <li> Correct Characters: {correctChar}</li>
         <li> Error Characters: {errorChar}</li>
+        {/*👆 TODO: DELETE THIS BLOCK 👆 */}
       </ul>
       {!currRecord.length ? (
         <button onClick={newSubmit} disabled={disable}>

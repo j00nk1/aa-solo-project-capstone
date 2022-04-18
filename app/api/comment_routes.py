@@ -25,5 +25,6 @@ def record_comments(record_id):
 def delete_comment(comment_id):
   comment = Comment.query.get(comment_id)
   db.session.delete(comment)
+  db.session.commit()
   return comment.to_dict()
   
