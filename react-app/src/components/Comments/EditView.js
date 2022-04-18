@@ -7,38 +7,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCommentThunk } from "../../store/comments";
 
 function EditView({ props }) {
+  console.log("PROPS!!??", props);
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
+  // const currComment = useSelector(state => state.comment).filter()
   const comment = props?.comment;
   const userObj = useSelector(state => state?.users);
   const sessionUser = props?.sessionUser;
 
   // const CommentMapper = (comment, i) => {
-  const editModeBtn = (comment_id, clicked_id) => {
-    console.log(editMode);
+  const editModeBtn = comment_id => {
+    console.log(editMode, comment_id);
     setEditMode(() => !editMode);
     console.log(editMode);
   };
 
+  // DELETE BUTTON FUNCTION
   const handleRemove = async (e, comment_id) => {
     e.preventDefault();
     await dispatch(deleteCommentThunk(comment_id));
   };
 
-  //   const cancelEditMode = async e => {
-  //     e.preventDefault();
-  //     await setEditMode(() => false);
-  //     console.log(editMode);
-  //   };
+  const cancelEditMode = async e => {
+    e.preventDefault();
+    await setEditMode(() => false);
+    console.log(editMode);
+  };
 
-  //   const returnEditView = comment => {
-  //     return (
-  //       <form>
-  //         <input defaultValue={comment} />
-  //         <button onClick={cancelEditMode}>cancel</button>
-  //       </form>
-  //     );
-  //   };
+  const returnEditView = comment => {
+    return (
+      <form>
+        <input defaultValue={comment} />
+        <button onClick={cancelEditMode}>cancel</button>
+      </form>
+    );
+  };
 
   return (
     <div key={comment?.content + "userId"} className="comment_container">
@@ -57,7 +60,7 @@ function EditView({ props }) {
               <button
                 className="edit_btn"
                 value={comment?.id}
-                onClick={e => editModeBtn(comment?.id, e.target.value)}
+                onClick={e => editModeBtn(comment?.id)}
               >
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
@@ -71,8 +74,7 @@ function EditView({ props }) {
           )}
         </div>
       ) : (
-        <EditView content={comment?.content} />
-        // returnEditView(comment.content)
+        returnEditView(comment.content)
       )}
     </div>
   );
