@@ -120,10 +120,10 @@ fetched_quotes = [
         "h": "<blockquote>&ldquo;Tenderness and kindness are not signs of weakness and despair, but manifestations of strength and resolution.&rdquo; &mdash; <footer>Kahlil Gibran</footer></blockquote>",
     },
     {
-        "q": "Watch what you say, and whaterver you say, practice it.",
+        "q": "Watch what you say, and whatever you say, practice it.",
         "a": "Soyen Shaku",
         "c": "55",
-        "h": "<blockquote>&ldquo;Watch what you say, and whaterver you say, practice it.&rdquo; &mdash; <footer>Soyen Shaku</footer></blockquote>",
+        "h": "<blockquote>&ldquo;Watch what you say, and whatever you say, practice it.&rdquo; &mdash; <footer>Soyen Shaku</footer></blockquote>",
     },
     {
         "q": "Money poisons you when you've got it, and starves you when you haven't.",

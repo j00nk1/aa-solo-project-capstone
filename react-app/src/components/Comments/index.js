@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+
 import { addCommentThunk, getCommentsThunk } from "../../store/comments";
+import EditView from "./EditView";
 import "./Comments.css";
 
 function Comments({ record_id }) {
@@ -14,7 +15,6 @@ function Comments({ record_id }) {
   const commentList = Object.values(commentObj).filter(
     comment => comment.record_id === record_id
   );
-  const userObj = useSelector(state => state.users);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -37,65 +37,6 @@ function Comments({ record_id }) {
     await dispatch(getCommentsThunk());
   };
 
-  // need to move this block to another component------------------------
-  // pass the comment, index, functions, through prop
-  const CommentMapper = (comment, i) => {
-    const [editMode, setEditMode] = useState(false);
-    const editModeBtn = (comment_id, clicked_id) => {
-      console.log(comment_id, +clicked_id);
-      if (comment_id === +clicked_id) {
-        setEditMode(() => true);
-      }
-    };
-
-    const cancelEditMode = async e => {
-      e.preventDefault();
-      await setEditMode(() => false);
-      console.log(editMode);
-    };
-
-    const returnEditView = comment => {
-      return (
-        <form>
-          <input defaultValue={comment} />
-          <button onClick={cancelEditMode}>cancel</button>
-        </form>
-      );
-    };
-
-    return (
-      <div key={comment.content + "userId"} className="comment_container">
-        {!editMode ? (
-          <div className="each_comments">
-            <NavLink
-              to={`/users/${userObj[comment.user_id]?.id}`}
-              className="user_profile_link"
-            >
-              {userObj[comment.user_id]?.username}
-            </NavLink>
-            <p style={{ padding: "0.5rem 1rem " }}>{comment.content}</p>
-            {/* TODO: allow the record holder to delete the comments? */}
-            {comment.user_id === sessionUser.id && (
-              <div className="btn_container">
-                <button
-                  className="edit_btn"
-                  value={comment.id}
-                  onClick={e => editModeBtn(comment.id, e.target.value)}
-                >
-                  Edit
-                </button>
-                <button className="delete_btn">Delete</button>
-              </div>
-            )}
-          </div>
-        ) : (
-          returnEditView(comment.content)
-        )}
-      </div>
-    );
-  };
-  // need to move this block to another component------------------------
-
   return (
     <>
       <form onSubmit={handleSubmit} className="comment_form">
@@ -109,10 +50,12 @@ function Comments({ record_id }) {
       </form>
 
       {commentList.length > 0 &&
-        commentList.map((comment, i) =>
-          // TODO: INSERT COMPONENT
-          CommentMapper(comment, i)
-        )}
+        commentList.map((comment, i) => (
+          <EditView
+            props={{ comment, index: i, sessionUser }}
+            key={comment?.content + "userId"}
+          />
+        ))}
     </>
   );
 }

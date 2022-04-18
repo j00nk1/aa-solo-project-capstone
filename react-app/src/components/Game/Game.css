@@ -25,7 +25,7 @@
 .caret {
   animation-name: flash; /* cooperate with @keyframes */
   animation-iteration-count: infinite;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   transition: 0.12s;
   border-left: 1px solid white;
 }
@@ -48,6 +48,6 @@
 }
 
 .text_container:focus {
-  border: 1.5px solid coral;
+  outline: 1.5px solid coral;
   background-color: rgba(185, 176, 176, 0.089);
 }
