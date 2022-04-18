@@ -44,6 +44,11 @@ function User() {
     dispatch(getCommentsThunk());
   }, [dispatch]);
 
+  //TODO: force scroll to the top of the container after render the profile page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const deleteBtn = async rec_id => {
     await dispatch(deleteRecordThunk(rec_id));
   };

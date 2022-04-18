@@ -1,0 +1,25 @@
+a.user_profile_link {
+  text-decoration: underline;
+  text-decoration-color: aqua;
+}
+
+.user_profile_link:hover {
+  text-decoration: none;
+  color: dodgerblue;
+  transition: 0.5s;
+}
+
+.each_comments {
+  background-color: #323236;
+  border-bottom: 1px dashed white;
+}
+
+.comment_form {
+  margin-bottom: 0.5rem;
+}
+
+.edit_btn:hover {
+  background-color: dodgerblue;
+  color: white;
+  transition: 0.5s;
+}
