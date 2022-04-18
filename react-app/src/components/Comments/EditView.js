@@ -2,24 +2,26 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenToSquare,
+  faTrashCan,
+  faX,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCommentThunk } from "../../store/comments";
+import { deleteCommentThunk, editCommentThunk } from "../../store/comments";
 
 function EditView({ props }) {
-  console.log("PROPS!!??", props);
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-  // const currComment = useSelector(state => state.comment).filter()
   const comment = props?.comment;
+  const [editedComment, setEditedComment] = useState(comment.content);
   const userObj = useSelector(state => state?.users);
   const sessionUser = props?.sessionUser;
 
   // const CommentMapper = (comment, i) => {
-  const editModeBtn = comment_id => {
-    console.log(editMode, comment_id);
+  const editModeBtn = () => {
     setEditMode(() => !editMode);
-    console.log(editMode);
   };
 
   // DELETE BUTTON FUNCTION
@@ -31,51 +33,64 @@ function EditView({ props }) {
   const cancelEditMode = async e => {
     e.preventDefault();
     await setEditMode(() => false);
-    console.log(editMode);
   };
 
-  const returnEditView = comment => {
-    return (
-      <form>
-        <input defaultValue={comment} />
-        <button onClick={cancelEditMode}>cancel</button>
-      </form>
+  const handleSubmit = async e => {
+    e.preventDefault();
+    await setEditMode(() => false);
+    await dispatch(
+      editCommentThunk({ content: editedComment, id: comment.id })
     );
   };
 
   return (
     <div key={comment?.content + "userId"} className="comment_container">
-      {!editMode ? (
-        <div className="each_comments">
-          <NavLink
-            to={`/users/${userObj[comment?.user_id]?.id}`}
-            className="user_profile_link"
-          >
-            {userObj[comment?.user_id]?.username}
-          </NavLink>
-          <p style={{ padding: "0.5rem 1rem " }}>{comment?.content}</p>
-          {/* TODO: allow the record holder to delete the comments? */}
-          {comment?.user_id === sessionUser?.id && (
-            <div className="btn_container">
-              <button
-                className="edit_btn"
-                value={comment?.id}
-                onClick={e => editModeBtn(comment?.id)}
-              >
-                <FontAwesomeIcon icon={faPenToSquare} />
+      <div className="each_comments">
+        <NavLink
+          to={`/users/${userObj[comment?.user_id]?.id}`}
+          className="user_profile_link"
+        >
+          {userObj[comment?.user_id]?.username}
+        </NavLink>
+        {!editMode ? (
+          <>
+            <p style={{ padding: "0.5rem 1rem " }}>{comment?.content}</p>
+            {/* TODO: allow the record holder to delete the comments? */}
+            {comment?.user_id === sessionUser?.id && (
+              <div className="btn_container">
+                <button
+                  className="edit_btn"
+                  value={comment?.id}
+                  onClick={e => editModeBtn(e)}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+                <button
+                  className="delete_btn"
+                  onClick={e => handleRemove(e, comment.id)}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <form onSubmit={e => handleSubmit(e)}>
+              <input
+                value={editedComment}
+                onChange={e => setEditedComment(e.target.value)}
+              />
+              <button onClick={e => handleSubmit(e)}>
+                <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
               </button>
-              <button
-                className="delete_btn"
-                onClick={e => handleRemove(e, comment.id)}
-              >
-                <FontAwesomeIcon icon={faTrashCan} />
+              <button onClick={cancelEditMode}>
+                <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
               </button>
-            </div>
-          )}
-        </div>
-      ) : (
-        returnEditView(comment.content)
-      )}
+            </form>
+          </>
+        )}
+      </div>
     </div>
   );
 }
