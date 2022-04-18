@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
-import { addCommentThunk, getRecordCommentsThunk } from "../../store/comments";
+import { NavLink } from "react-router-dom";
+import { addCommentThunk, getCommentsThunk } from "../../store/comments";
 import "./Comments.css";
 
 function Comments({ record_id }) {
-  const history = useHistory();
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
   const [errors, setErrors] = useState("");
+
   const commentObj = useSelector(state => state.comments);
   const sessionUser = useSelector(state => state.session.user);
   const commentList = Object.values(commentObj).filter(
@@ -34,11 +34,71 @@ function Comments({ record_id }) {
       })
     );
     setComment("");
-    await dispatch(getRecordCommentsThunk(record_id));
+    await dispatch(getCommentsThunk());
   };
+
+  // need to move this block to another component------------------------
+  // pass the comment, index, functions, through prop
+  const CommentMapper = (comment, i) => {
+    const [editMode, setEditMode] = useState(false);
+    const editModeBtn = (comment_id, clicked_id) => {
+      console.log(comment_id, +clicked_id);
+      if (comment_id === +clicked_id) {
+        setEditMode(() => true);
+      }
+    };
+
+    const cancelEditMode = async e => {
+      e.preventDefault();
+      await setEditMode(() => false);
+      console.log(editMode);
+    };
+
+    const returnEditView = comment => {
+      return (
+        <form>
+          <input defaultValue={comment} />
+          <button onClick={cancelEditMode}>cancel</button>
+        </form>
+      );
+    };
+
+    return (
+      <div key={comment.content + "userId"} className="comment_container">
+        {!editMode ? (
+          <div className="each_comments">
+            <NavLink
+              to={`/users/${userObj[comment.user_id]?.id}`}
+              className="user_profile_link"
+            >
+              {userObj[comment.user_id]?.username}
+            </NavLink>
+            <p style={{ padding: "0.5rem 1rem " }}>{comment.content}</p>
+            {/* TODO: allow the record holder to delete the comments? */}
+            {comment.user_id === sessionUser.id && (
+              <div className="btn_container">
+                <button
+                  className="edit_btn"
+                  value={comment.id}
+                  onClick={e => editModeBtn(comment.id, e.target.value)}
+                >
+                  Edit
+                </button>
+                <button className="delete_btn">Delete</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          returnEditView(comment.content)
+        )}
+      </div>
+    );
+  };
+  // need to move this block to another component------------------------
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="comment_form">
         <input
           value={comment}
           onChange={e => setComment(e.target.value)}
@@ -47,29 +107,12 @@ function Comments({ record_id }) {
         />
         <small className="errors">{errors.length > 0 && errors}</small>
       </form>
-      {/* TODO: render comments */}
 
       {commentList.length > 0 &&
-        commentList.map(comment => (
-          <div key={comment.content + "userId"} className="comment_container">
-            <div>
-              <NavLink
-                to={`/users/${userObj[comment.user_id]?.id}`}
-                className="user_profile_link"
-              >
-                {userObj[comment.user_id]?.username}
-              </NavLink>
-              <p>{comment.content}</p>
-            </div>
-            {/* TODO: allow the record holder to delete the comments? */}
-            {comment.user_id === sessionUser.id && (
-              <div className="btn_container">
-                <button className="edit_btn">Edit</button>
-                <button className="delete_btn">Delete</button>
-              </div>
-            )}
-          </div>
-        ))}
+        commentList.map((comment, i) =>
+          // TODO: INSERT COMPONENT
+          CommentMapper(comment, i)
+        )}
     </>
   );
 }
