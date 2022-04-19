@@ -5,7 +5,7 @@
 
 .head_line {
   text-align: center;
-  margin: 1rem auto;
+  margin: 0.5rem 1rem;
 }
 
 .record_container {
@@ -16,8 +16,13 @@
   margin: 1rem auto;
 }
 
+.user_profile_link {
+  margin: 2px 5px;
+  font-weight: bold;
+}
+
 .each_comments {
-  padding: 2px 4px;
+  padding: 2px 3px;
 }
 
 .comment_input {
@@ -26,4 +31,8 @@
 
 .comment_content {
   padding: 0.5rem 1rem;
+}
+
+.edit_btn {
+  margin: 5px 5px;
 }

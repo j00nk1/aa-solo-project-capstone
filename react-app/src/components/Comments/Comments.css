@@ -9,6 +9,10 @@ a.user_profile_link {
   transition: 0.5s;
 }
 
+.edit_form {
+  margin: 5px auto;
+}
+
 .each_comments {
   background-color: #323236;
   border-bottom: 1px dashed white;

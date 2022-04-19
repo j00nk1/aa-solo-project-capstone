@@ -62,12 +62,14 @@ function EditView({ props }) {
                   className="edit_btn"
                   value={comment?.id}
                   onClick={e => editModeBtn(e)}
+                  title="Edit Comment"
                 >
                   <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
                 <button
                   className="delete_btn"
                   onClick={e => handleRemove(e, comment.id)}
+                  title="Delete Comment"
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </button>
@@ -76,18 +78,29 @@ function EditView({ props }) {
           </>
         ) : (
           <>
-            <form onSubmit={e => handleSubmit(e)}>
+            <form onSubmit={e => handleSubmit(e)} className="edit_form">
               <input
                 value={editedComment}
                 onChange={e => setEditedComment(e.target.value)}
+                className="comment_input"
               />
-              <button onClick={e => handleSubmit(e)} className="edit_btn">
+            </form>
+            <div className="btn_container">
+              <button
+                onClick={e => handleSubmit(e)}
+                className="edit_btn"
+                title="Submit Change"
+              >
                 <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
               </button>
-              <button onClick={cancelEditMode} className="cancel_btn">
+              <button
+                onClick={cancelEditMode}
+                className="cancel_btn"
+                title="Cancel Change"
+              >
                 <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
               </button>
-            </form>
+            </div>
           </>
         )}
       </div>
