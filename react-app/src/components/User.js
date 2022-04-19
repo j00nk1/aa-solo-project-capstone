@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 import { getCommentsThunk } from "../store/comments";
 import { getQuotesThunk } from "../store/quotes";
 import { deleteRecordThunk, getUserRecordsThunk } from "../store/records";
@@ -10,6 +10,7 @@ import "./User.css";
 
 function User() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({});
   const { userId } = useParams();
   const sessionUser = useSelector(state => state.session.user);
@@ -83,7 +84,13 @@ function User() {
                   key={record.id + "quote_card"}
                   className="quote_card container_row"
                 >
-                  <div>
+                  <div
+                    className="ranking_link_area"
+                    title="To ranking page"
+                    onClick={() =>
+                      history.push(`/ranking/${quoteObj[record.quote_id]?.id}/`)
+                    }
+                  >
                     <h2>{quoteObj[record.quote_id]?.author}</h2>
                     <blockquote>
                       &ldquo;{quoteObj[record.quote_id]?.content}&rdquo;
