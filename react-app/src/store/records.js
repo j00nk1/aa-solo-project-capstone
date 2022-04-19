@@ -44,6 +44,12 @@ export const getUserRecordsThunk = user_id => async dispatch => {
   dispatch(getAllRecords(data));
 };
 
+export const getQuoteRecordsThunk = quote_id => async dispatch => {
+  const res = await fetch(`/api/records/quotes/${quote_id}/`);
+  const data = await res.json();
+  dispatch(getAllRecords(data));
+};
+
 export const addRecordThunk = record => async dispatch => {
   const quote_id = record.quote_id;
   const res = await fetch(`/api/quotes/${quote_id}/records/`, {

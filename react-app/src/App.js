@@ -10,6 +10,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import Quotes from "./components/Quotes";
 import Game from "./components/Game";
+import Ranking from "./components/Ranking.js";
 
 import { authenticate } from "./store/session";
 
@@ -49,6 +50,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/quotes/:id" exact={true}>
           <Game />
+        </ProtectedRoute>
+        <ProtectedRoute path="/ranking/:quote_id" exact={true}>
+          <Ranking />
         </ProtectedRoute>
         <Route>
           <h1>Page Not Found</h1>

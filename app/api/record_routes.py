@@ -19,6 +19,12 @@ def user_records(user_id):
   records = Record.query.filter_by(user_id = user_id)
   return {'records': [record.to_dict() for record in records]}
 
+# Quote's records
+@record_routes.route('/quotes/<int:quote_id>/')
+def quote_records(quote_id):
+  records = Record.query.filter_by(quote_id = quote_id)
+  return {'records': [record.to_dict() for record in records]}
+
 
 @record_routes.route('/<int:record_id>/', methods=["PATCH"])
 def update_record(record_id):

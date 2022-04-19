@@ -15,7 +15,7 @@ def quotes():
 @quote_routes.route('/<int:id>/')
 def quote(id):
   quote = Quote.query.get(id)
-  return {'quote': quote.to_dict()}
+  return quote.to_dict()
 
 # POST a record
 @quote_routes.route('/<int:id>/records/', methods=["POST"])

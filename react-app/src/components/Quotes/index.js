@@ -55,65 +55,75 @@ function Quotes() {
   return (
     <div className="quotes_container container_col">
       <h1 style={{ textAlign: "center" }}>All Quotes</h1>
-      {quoteList.length > 0 &&
-        quoteList.map(quote => (
-          <div key={quote.id} className="quote_card container_row">
-            <div>
-              <h2>{quote.author}</h2>
-              <blockquote>{quote.content}</blockquote>
-              <small>{quote.char_count} characters</small>
-              <ul className="record_list container_row">
-                {hasPlayed(quote.id) && (
-                  <>
-                    <li className="wpm">{`${wpm}WPM`}</li>
-                    <li className="acc">Accuracy: {accuracy}%</li>
-                    <li className="dur">Duration: {duration}s</li>
-                    {/* <button
+      <div className="quote_wrapper">
+        {quoteList.length > 0 &&
+          quoteList.map(quote => (
+            <div key={quote.id} className="quote_wrapper">
+              <div className="quote_card container_row">
+                <div>
+                  <h2>{quote.author}</h2>
+                  <blockquote>{quote.content}</blockquote>
+                  <small>{quote.char_count} characters</small>
+                  <ul className="record_list container_row">
+                    {hasPlayed(quote.id) && (
+                      <>
+                        <li className="wpm">{`${wpm}WPM`}</li>
+                        <li className="acc">Accuracy: {accuracy}%</li>
+                        <li className="dur">Duration: {duration}s</li>
+                        {/* <button
                       value={record_id}
                       onClick={e => console.log(e.target.value)}
                     >
                       DELETE
                     </button> */}
-                  </>
-                )}
-              </ul>
+                      </>
+                    )}
+                  </ul>
+                </div>
+                <div className="container_col btn_container">
+                  {played ? (
+                    <NavLink
+                      to={{
+                        pathname: `/quotes/${quote.id}`,
+                        state: { wpm, accuracy, duration },
+                      }}
+                      style={{ display: "inline-block", width: "100%" }}
+                    >
+                      <button
+                        className="play_btn"
+                        // onClick={() => history.push(`/quotes/${quote.id}`)}
+                      >
+                        Play again
+                      </button>
+                    </NavLink>
+                  ) : (
+                    <NavLink
+                      to={`/quotes/${quote.id}`}
+                      style={{ display: "inline-block", width: "100%" }}
+                    >
+                      <button
+                        className="play_btn"
+                        // onClick={() => history.push(`/quotes/${quote.id}`)}
+                      >
+                        Play
+                      </button>
+                    </NavLink>
+                  )}
+
+                  {played && (
+                    <button
+                      className="delete_btn"
+                      value={record_id}
+                      onClick={e => deleteBtn(e.target.value)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="container_col btn_container">
-              <button
-                className="play_btn"
-                // onClick={() => history.push(`/quotes/${quote.id}`)}
-              >
-                {played ? (
-                  <NavLink
-                    to={{
-                      pathname: `/quotes/${quote.id}`,
-                      state: { wpm, accuracy, duration },
-                    }}
-                    style={{ display: "inline-block", width: "100%" }}
-                  >
-                    Play again
-                  </NavLink>
-                ) : (
-                  <NavLink
-                    to={`/quotes/${quote.id}`}
-                    style={{ display: "inline-block", width: "100%" }}
-                  >
-                    Play
-                  </NavLink>
-                )}
-              </button>
-              {played && (
-                <button
-                  className="delete_btn"
-                  value={record_id}
-                  onClick={e => deleteBtn(e.target.value)}
-                >
-                  Delete
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }

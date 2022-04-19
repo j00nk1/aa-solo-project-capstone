@@ -6,8 +6,11 @@ import { getRecordsThunk } from "../store/records";
 function UsersList() {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
-  const allRecords = useSelector(state => state.records);
-  console.log(allRecords);
+  const allRecordObj = useSelector(state => state.records);
+  const sortedRecords = Object.values(allRecordObj).sort(
+    (a, b) => b.score - a.score
+  );
+  console.log(sortedRecords);
 
   useEffect(() => {
     async function fetchData() {

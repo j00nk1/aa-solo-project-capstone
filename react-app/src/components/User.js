@@ -98,26 +98,24 @@ function User() {
                   </div>
                   {sessionUser.id === +userId && (
                     <div className="container_col btn_container">
-                      <button
-                        className="play_btn"
-                        // onClick={() => history.push(`/quotes/${quote.id}`)}
+                      <NavLink
+                        to={{
+                          pathname: `/quotes/${quoteObj[record.quote_id]?.id}`,
+                          state: {
+                            wpm: record.wpm,
+                            accuracy: record.accuracy,
+                            duration: record.dur_time,
+                          },
+                        }}
+                        style={{ width: "100%" }}
                       >
-                        <NavLink
-                          to={{
-                            pathname: `/quotes/${
-                              quoteObj[record.quote_id]?.id
-                            }`,
-                            state: {
-                              wpm: record.wpm,
-                              accuracy: record.accuracy,
-                              duration: record.dur_time,
-                            },
-                          }}
-                          style={{ width: "100%" }}
+                        <button
+                          className="play_btn"
+                          // onClick={() => history.push(`/quotes/${quote.id}`)}
                         >
                           Play again
-                        </NavLink>
-                      </button>
+                        </button>
+                      </NavLink>
                       <button
                         className="delete_btn"
                         value={record.id}
