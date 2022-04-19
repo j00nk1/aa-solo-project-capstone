@@ -81,7 +81,7 @@ function TypingInput({ data }) {
       const time = (dur % 60000) / 1000; // convert it into sec
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
-      setTimeDiff(Math.round((time - score.duration) * 1000) / 1000);
+      if (score) setTimeDiff(Math.round((time - score.duration) * 1000) / 1000);
       setRecordDuration(dur); // for recording duration
       setAccuracy(+((correctChar / text.content.length) * 100).toFixed(2)); // toFixed returns STRING
       setDisable(false);
