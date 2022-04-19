@@ -1,0 +1,36 @@
+.search_bar_container {
+  position: relative;
+  flex: 2 1 50%;
+}
+
+.search_results_container {
+  position: absolute;
+  top: 1.9rem;
+  background-color: azure;
+  max-height: 9rem;
+  border-radius: 5px;
+  overflow-y: scroll;
+  transition: 0.5s;
+  width: 240px;
+}
+
+.search_bar_container input {
+  width: 240px;
+}
+
+.search_results_container::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 5px;
+  height: 90%;
+}
+
+.search_results_container::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border: 1px solid rgb(75, 75, 75);
+  border-radius: 20px;
+}
+
+.quote_result:hover {
+  background-color: aquamarine;
+  transition: 0.5s;
+}

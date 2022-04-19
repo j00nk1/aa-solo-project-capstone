@@ -138,6 +138,12 @@ function User() {
                 </div>
               </div>
             ))}
+          {!recordList.length && (
+            <div className="record_container">
+              <p>No Record Yet</p>
+              {/* <NavLink >Play the game and create a new record!</NavLink> */}
+            </div>
+          )}
         </div>
       </div>
     </div>

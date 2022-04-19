@@ -56,12 +56,16 @@
   gap: 5rem;
 }
 
+.positive,
+.negative {
+  font-size: smaller;
+  margin-left: 1rem;
+}
+
 .positive {
-  font-size: small;
-  color: #0bb981;
+  color: #b7ff26;
 }
 
 .negative {
-  font-size: smaller;
   color: crimson;
 }
