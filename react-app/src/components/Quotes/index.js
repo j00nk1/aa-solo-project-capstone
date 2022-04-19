@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 import { getQuotesThunk } from "../../store/quotes";
 import { deleteRecordThunk, getUserRecordsThunk } from "../../store/records";
 
+import "./Quotes.css";
+
 function Quotes() {
   const dispatch = useDispatch();
 
@@ -62,7 +64,14 @@ function Quotes() {
             <div key={quote.id} className="quote_wrapper">
               <div className="quote_card container_row">
                 <div>
-                  <h2>{quote.author}</h2>
+                  <h2 title="To ranking page">
+                    <NavLink
+                      to={`/ranking/${quote.id}/`}
+                      className="quote_author"
+                    >
+                      {quote.author}
+                    </NavLink>
+                  </h2>
                   <blockquote>{quote.content}</blockquote>
                   <small>{quote.char_count} characters</small>
                   <ul className="record_list container_row">

@@ -1,0 +1,4 @@
+.quote_author:hover {
+  color: aquamarine;
+  transition: 0.5s;
+}
