@@ -46,7 +46,8 @@ function TypingInput({ text }) {
     },
     actions: { insertTyping, deleteTyping, resetTyping },
   } = useTyping(text?.content, {
-    skipCurrentWordOnSpace: false,
+    skipCurrentWordOnSpace: false, //
+    pauseOnError: false, // When true, stays on the same character until it is correctly inputted. Otherwise, it moves on to the next character instead
   });
 
   // track cursor position, and adjust the position depending on the paragraph's size change.
