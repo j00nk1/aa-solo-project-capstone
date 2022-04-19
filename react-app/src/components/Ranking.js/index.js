@@ -8,11 +8,11 @@ import { getUsersThunk } from "../../store/users";
 function Ranking() {
   const dispatch = useDispatch();
   const { quote_id } = useParams();
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const quoteRecordsObj = useSelector(state => state.records);
-  const sortedRecords = Object.values(quoteRecordsObj).sort(
-    (a, b) => b.score - a.score
-  );
+  // const sortedRecords = Object.values(quoteRecordsObj).sort(
+  //   (a, b) => b.score - a.score
+  // );
   const quote = useSelector(state => state?.quotes?.currQuote);
 
   useEffect(() => {
