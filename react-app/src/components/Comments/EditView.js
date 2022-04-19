@@ -14,6 +14,7 @@ import { deleteCommentThunk, editCommentThunk } from "../../store/comments";
 function EditView({ props }) {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
+  const [errors, setErrors] = useState("");
   const comment = props?.comment;
   const [editedComment, setEditedComment] = useState(comment.content);
   const userObj = useSelector(state => state?.users);
@@ -38,9 +39,23 @@ function EditView({ props }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    setErrors("");
+    if (!editedComment.length || editedComment.length > 100) {
+      setErrors(
+        "Comment must be at least 1 character long and less than 100 characters long"
+      );
+      return;
+    }
+
     await setEditMode(() => false);
     await dispatch(
-      editCommentThunk({ content: editedComment, id: comment.id })
+      editCommentThunk({
+        content: editedComment,
+        id: comment.id,
+        record_id: comment.record_id,
+        user_id: sessionUser.id,
+      })
     );
   };
 
@@ -85,6 +100,7 @@ function EditView({ props }) {
                 onChange={e => setEditedComment(e.target.value)}
                 className="comment_input"
               />
+              <small className="errors">{errors.length > 0 && errors}</small>
             </form>
             <div className="btn_container">
               <button

@@ -8,12 +8,14 @@ import {
   getRecordsThunk,
 } from "../../store/records";
 
-function TypingInput({ text }) {
+function TypingInput({ data }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const user_id = sessionUser.id;
   const recordList = useSelector(state => Object.values(state.records));
+  const text = data?.currQuote;
+  const score = data?.score;
 
   useEffect(() => {
     if (!recordList.length) dispatch(getRecordsThunk());
@@ -23,10 +25,12 @@ function TypingInput({ text }) {
     record => record.user_id === user_id && record.quote_id === text?.id
   );
   const [isFocused, setIsFocused] = useState(false);
-  const letterElements = useRef(null); // to access the element, letterElements.current
+  // to access the element, letterElements.current
+  const letterElements = useRef(null);
 
   // for rendering purpose
-  const [time, setTime] = useState("0:00");
+  const [time, setTime] = useState(0);
+  const [timeDiff, setTimeDiff] = useState(0);
   // for recording purpose
   const [wpm, setWpm] = useState(0);
   const [duration, setRecordDuration] = useState(0);
@@ -40,13 +44,14 @@ function TypingInput({ text }) {
       currIndex,
       phase,
       correctChar,
-      errorChar,
+      // errorChar,
       startTime,
       endTime,
     },
     actions: { insertTyping, deleteTyping, resetTyping },
   } = useTyping(text?.content, {
-    skipCurrentWordOnSpace: false,
+    skipCurrentWordOnSpace: false, //
+    pauseOnError: false, // When true, stays on the same character until it is correctly inputted. Otherwise, it moves on to the next character instead
   });
 
   // track cursor position, and adjust the position depending on the paragraph's size change.
@@ -76,6 +81,7 @@ function TypingInput({ text }) {
       const time = (dur % 60000) / 1000; // convert it into sec
       const durInSec = Math.floor(dur / 1000);
       setTime(time); // for rendering duration
+      if (score) setTimeDiff(Math.round((time - score.duration) * 1000) / 1000);
       setRecordDuration(dur); // for recording duration
       setAccuracy(+((correctChar / text.content.length) * 100).toFixed(2)); // toFixed returns STRING
       setDisable(false);
@@ -83,7 +89,7 @@ function TypingInput({ text }) {
     } else {
       setTime(0);
     }
-  }, [phase, startTime, endTime, correctChar, text?.content.length]);
+  }, [phase, startTime, endTime, correctChar, text?.content.length, score]);
 
   //handle key presses
   const handleKeyDown = (letter, control) => {
@@ -167,20 +173,69 @@ function TypingInput({ text }) {
           </span>
         ) : null}
       </div>
-      <ul>
-        {phase === PhaseType.Ended && startTime && endTime ? (
-          <>
-            <li className="wpm score_in_game">WPM: {wpm}</li>
-            <li className="acc score_in_game">Accuracy: {accuracy}%</li>
-            <li className="dur score_in_game">Duration: {time}s</li>
-          </>
+      <div className="container_row game_score_container">
+        {score ? (
+          <div>
+            <h2>Previous Score</h2>
+            <p className="wpm score_in_game">WPM: {score.wpm}</p>
+            <p className="acc score_in_game">Accuracy: {score.accuracy}%</p>
+            <p className="dur score_in_game">Duration: {score.duration}s</p>
+          </div>
         ) : null}
-        {/*👇 TODO: DELETE THIS BLOCK 👇 */}
-        <li> Current Index: {currIndex}</li>
-        <li> Correct Characters: {correctChar}</li>
-        <li> Error Characters: {errorChar}</li>
-        {/*👆 TODO: DELETE THIS BLOCK 👆 */}
-      </ul>
+        <div>
+          {phase === PhaseType.Ended && startTime && endTime ? (
+            <>
+              <h2>{score ? "New Score" : "Score"}</h2>
+              <p className="wpm score_in_game">
+                WPM: {wpm}
+                {score && (
+                  <>
+                    {wpm - score.wpm > 0 ? (
+                      <span className="positive"> +{wpm - score.wpm}👆</span>
+                    ) : wpm - score.wpm ? (
+                      <span className="negative"> {wpm - score.wpm}👇</span>
+                    ) : null}
+                  </>
+                )}
+              </p>
+              <p className="acc score_in_game">
+                Accuracy: {accuracy}%
+                {score && (
+                  <>
+                    {accuracy - score.accuracy > 0 ? (
+                      <span className="positive">
+                        +{Math.round((accuracy - score.accuracy) * 100) / 100}
+                        %👆
+                      </span>
+                    ) : accuracy - score.accuracy ? (
+                      <span className="negative">
+                        {Math.round((accuracy - score.accuracy) * 100) / 100}%👇
+                      </span>
+                    ) : null}
+                  </>
+                )}
+              </p>
+              <p className="dur score_in_game">
+                Duration: {time}s
+                {score && (
+                  <>
+                    {timeDiff > 0 ? (
+                      <span className="negative">+{timeDiff}s🐢</span>
+                    ) : +time - score.duration ? (
+                      <span className="positive">{timeDiff}s🏃</span>
+                    ) : null}
+                  </>
+                )}
+              </p>
+            </>
+          ) : null}
+          {/*👇 TODO: DELETE THIS BLOCK 👇 */}
+          {/* <li> Current Index: {currIndex}</li>
+          <li> Correct Characters: {correctChar}</li>
+          <li> Error Characters: {errorChar}</li> */}
+          {/*👆 TODO: DELETE THIS BLOCK 👆 */}
+        </div>
+      </div>
       {!currRecord.length ? (
         <button onClick={newSubmit} disabled={disable}>
           Submit

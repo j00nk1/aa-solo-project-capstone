@@ -51,3 +51,21 @@
   outline: 1.5px solid coral;
   background-color: rgba(185, 176, 176, 0.089);
 }
+
+.game_score_container {
+  gap: 5rem;
+}
+
+.positive,
+.negative {
+  font-size: smaller;
+  margin-left: 1rem;
+}
+
+.positive {
+  color: #b7ff26;
+}
+
+.negative {
+  color: crimson;
+}
