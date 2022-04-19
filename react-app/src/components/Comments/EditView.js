@@ -41,7 +41,7 @@ function EditView({ props }) {
     e.preventDefault();
 
     setErrors("");
-    if (!comment.length || comment.length > 100) {
+    if (!editedComment.length || editedComment.length > 100) {
       setErrors(
         "Comment must be at least 1 character long and less than 100 characters long"
       );

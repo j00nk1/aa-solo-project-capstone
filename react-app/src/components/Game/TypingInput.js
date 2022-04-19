@@ -8,12 +8,14 @@ import {
   getRecordsThunk,
 } from "../../store/records";
 
-function TypingInput({ text }) {
+function TypingInput({ data }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const user_id = sessionUser.id;
   const recordList = useSelector(state => Object.values(state.records));
+  const text = data?.currQuote;
+  const score = data?.score;
 
   useEffect(() => {
     if (!recordList.length) dispatch(getRecordsThunk());
@@ -40,7 +42,7 @@ function TypingInput({ text }) {
       currIndex,
       phase,
       correctChar,
-      errorChar,
+      // errorChar,
       startTime,
       endTime,
     },
@@ -168,20 +170,40 @@ function TypingInput({ text }) {
           </span>
         ) : null}
       </div>
-      <ul>
-        {phase === PhaseType.Ended && startTime && endTime ? (
-          <>
-            <li className="wpm score_in_game">WPM: {wpm}</li>
-            <li className="acc score_in_game">Accuracy: {accuracy}%</li>
-            <li className="dur score_in_game">Duration: {time}s</li>
-          </>
+      <div className="container_row game_score_container">
+        {score ? (
+          <div>
+            <h2>Previous Score</h2>
+            <p className="wpm score_in_game">WPM: {score.wpm}</p>
+            <p className="acc score_in_game">Accuracy: {score.accuracy}%</p>
+            <p className="dur score_in_game">Duration: {score.duration}s</p>
+          </div>
         ) : null}
-        {/*👇 TODO: DELETE THIS BLOCK 👇 */}
-        <li> Current Index: {currIndex}</li>
-        <li> Correct Characters: {correctChar}</li>
-        <li> Error Characters: {errorChar}</li>
-        {/*👆 TODO: DELETE THIS BLOCK 👆 */}
-      </ul>
+        <div>
+          {phase === PhaseType.Ended && startTime && endTime ? (
+            <>
+              <h2>{score ? "New Score" : "Score"}</h2>
+              <p className="wpm score_in_game">
+                {/* TODO */}
+                WPM: {wpm}{" "}
+                {score && wpm - score.wpm > 0 && (
+                  <span className="positive"> +{score.wpm - wpm}</span>
+                )}{" "}
+                {score && wpm - score.wpm < 0 && (
+                  <span className="negative"> -{score.wpm - wpm}</span>
+                )}
+              </p>
+              <p className="acc score_in_game">Accuracy: {accuracy}%</p>
+              <p className="dur score_in_game">Duration: {time}s</p>
+            </>
+          ) : null}
+          {/*👇 TODO: DELETE THIS BLOCK 👇 */}
+          {/* <li> Current Index: {currIndex}</li>
+          <li> Correct Characters: {correctChar}</li>
+          <li> Error Characters: {errorChar}</li> */}
+          {/*👆 TODO: DELETE THIS BLOCK 👆 */}
+        </div>
+      </div>
       {!currRecord.length ? (
         <button onClick={newSubmit} disabled={disable}>
           Submit
