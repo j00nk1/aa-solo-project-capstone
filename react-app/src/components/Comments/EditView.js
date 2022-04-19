@@ -40,7 +40,12 @@ function EditView({ props }) {
     e.preventDefault();
     await setEditMode(() => false);
     await dispatch(
-      editCommentThunk({ content: editedComment, id: comment.id })
+      editCommentThunk({
+        content: editedComment,
+        id: comment.id,
+        record_id: comment.record_id,
+        user_id: sessionUser.id,
+      })
     );
   };
 

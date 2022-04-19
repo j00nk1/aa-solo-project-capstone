@@ -1,6 +1,7 @@
 from crypt import methods
 from datetime import datetime
 from flask import Blueprint, request
+from app.api.auth_routes import validation_errors_to_error_messages
 from app.forms.comment_form import CommentForm
 
 from app.models import db, Comment
@@ -26,16 +27,16 @@ def record_comments(record_id):
 @comment_routes.route('/<int:comment_id>/', methods=["PATCH"])
 def update_record(comment_id):
   form = CommentForm()
-  # form['csrf_token'].data = request.cookies['csrf_token']
-  # if form.validate_on_submit():
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate_on_submit():
     
-  record = Comment.query.get(comment_id)
-  record.content=form.data["content"]
-  record.updated_at = datetime.utcnow()
-  
-  db.session.commit()
-  return record.to_dict()
-  # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    record = Comment.query.get(comment_id)
+    record.content=form.data["content"]
+    record.updated_at = datetime.utcnow()
+    
+    db.session.commit()
+    return record.to_dict()
+  return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @comment_routes.route("/<int:comment_id>/", methods=['DELETE'])
 def delete_comment(comment_id):
