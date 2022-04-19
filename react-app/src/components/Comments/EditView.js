@@ -27,7 +27,8 @@ function EditView({ props }) {
   // DELETE BUTTON FUNCTION
   const handleRemove = async (e, comment_id) => {
     e.preventDefault();
-    await dispatch(deleteCommentThunk(comment_id));
+    if (window.confirm("Are you sure you want to delete this comment?"))
+      await dispatch(deleteCommentThunk(comment_id));
   };
 
   const cancelEditMode = async e => {

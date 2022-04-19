@@ -49,7 +49,8 @@ function Quotes() {
   };
 
   const deleteBtn = async rec_id => {
-    await dispatch(deleteRecordThunk(rec_id));
+    if (window.confirm("Are you sure you want to delete this record?"))
+      await dispatch(deleteRecordThunk(rec_id));
   };
 
   return (
