@@ -49,3 +49,7 @@
   cursor: pointer;
   transition: 0.5s;
 }
+
+.updated_date {
+  margin-left: 7px;
+}

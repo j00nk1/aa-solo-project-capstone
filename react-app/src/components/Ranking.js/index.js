@@ -6,6 +6,8 @@ import { getSingleQuoteThunk } from "../../store/quotes";
 import { getQuoteRecordsThunk } from "../../store/records";
 import { getUsersThunk } from "../../store/users";
 
+import { localTime, localDate } from "../../functions";
+
 import "./Ranking.css";
 
 function Ranking() {
@@ -39,7 +41,6 @@ function Ranking() {
   }
 
   const quote = useSelector(state => state?.quotes?.currQuote);
-  // console.log("QUOTE", quote);
 
   useEffect(() => {
     dispatch(getSingleQuoteThunk(quote_id));
@@ -115,11 +116,13 @@ function Ranking() {
                   <li className="wpm">{record.wpm}WPM</li>
                   <li className="acc">Accuracy: {record.accuracy}%</li>
                   <li className="dur">Duration: {record.duration / 1000}s</li>
-                  <li>Score: {Math.round(record.score * 100) / 100}</li>
-                  {/* TODO: Render converted time  */}
-                  {/* <li>
-                    <small>@{record.updated_at}</small>
-                  </li> */}
+                  {/* <li>Score: {Math.round(record.score * 100) / 100}</li> */}
+                  <li>
+                    <small>@{localTime(record.updated_at)}</small>
+                    <small className="updated_date">
+                      {localDate(record.updated_at)}
+                    </small>
+                  </li>
                 </ul>
               </div>
             </div>

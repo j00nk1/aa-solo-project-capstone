@@ -8,6 +8,8 @@ import { getUsersThunk } from "../store/users";
 import Comments from "./Comments";
 import "./User.css";
 
+import { deleteBtn } from "../functions";
+
 function User() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -50,11 +52,6 @@ function User() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [userId]);
-
-  const deleteBtn = async rec_id => {
-    if (window.confirm("Are you sure you want to delete this record?"))
-      await dispatch(deleteRecordThunk(rec_id));
-  };
 
   if (!user) {
     return null;
@@ -127,7 +124,14 @@ function User() {
                       <button
                         className="delete_btn"
                         value={record.id}
-                        onClick={e => deleteBtn(e.target.value)}
+                        onClick={e =>
+                          deleteBtn(
+                            e.target.value,
+                            "Are you sure you want to delete this record?",
+                            dispatch,
+                            deleteRecordThunk
+                          )
+                        }
                       >
                         Delete Score
                       </button>
