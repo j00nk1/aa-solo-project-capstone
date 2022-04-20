@@ -30,6 +30,12 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #2a82e6;
+  color: white;
+  transition: 0.5s;
+}
+
 input,
 select,
 textarea {
