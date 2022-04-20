@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCommentThunk, editCommentThunk } from "../../store/comments";
+import { deleteBtn } from "../../functions";
 
 function EditView({ props }) {
   const dispatch = useDispatch();
@@ -23,13 +24,6 @@ function EditView({ props }) {
   // const CommentMapper = (comment, i) => {
   const editModeBtn = () => {
     setEditMode(() => !editMode);
-  };
-
-  // DELETE BUTTON FUNCTION
-  const handleRemove = async (e, comment_id) => {
-    e.preventDefault();
-    if (window.confirm("Are you sure you want to delete this comment?"))
-      await dispatch(deleteCommentThunk(comment_id));
   };
 
   const cancelEditMode = async e => {
@@ -84,7 +78,14 @@ function EditView({ props }) {
                 </button>
                 <button
                   className="delete_btn"
-                  onClick={e => handleRemove(e, comment.id)}
+                  onClick={() =>
+                    deleteBtn(
+                      comment.id,
+                      "Are you sure you want to delete this comment?",
+                      dispatch,
+                      deleteCommentThunk
+                    )
+                  }
                   title="Delete Comment"
                 >
                   <FontAwesomeIcon icon={faTrashCan} />

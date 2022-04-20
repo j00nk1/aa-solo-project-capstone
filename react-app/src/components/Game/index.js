@@ -24,7 +24,7 @@ function Game() {
       <div>
         <h1>{currQuote?.author}</h1>
       </div>
-      <p>Esc to reset</p>
+      {/* <p>Esc to reset</p> */}
       <p style={{ color: "grey", marginBottom: 10 }}>
         Click on the text below and start typing
       </p>

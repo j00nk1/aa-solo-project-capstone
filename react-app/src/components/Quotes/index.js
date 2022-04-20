@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
+import { deleteBtn } from "../../functions";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
@@ -49,11 +50,6 @@ function Quotes() {
     duration = rec.dur_time;
     record_id = rec.id;
     played = true;
-  };
-
-  const deleteBtn = async rec_id => {
-    if (window.confirm("Are you sure you want to delete this record?"))
-      await dispatch(deleteRecordThunk(rec_id));
   };
 
   return (
@@ -122,7 +118,14 @@ function Quotes() {
                     <button
                       className="delete_btn"
                       value={record_id}
-                      onClick={e => deleteBtn(e.target.value)}
+                      onClick={e =>
+                        deleteBtn(
+                          e.target.value,
+                          "Are you sure you want to delete this record?",
+                          dispatch,
+                          deleteRecordThunk
+                        )
+                      }
                     >
                       Delete
                     </button>

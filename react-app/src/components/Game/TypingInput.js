@@ -36,6 +36,7 @@ function TypingInput({ data }) {
   const [duration, setRecordDuration] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [disable, setDisable] = useState(true);
+  const [errors, setErrors] = useState([]);
 
   // destructure from useTyping packet
   const {
@@ -48,7 +49,7 @@ function TypingInput({ data }) {
       startTime,
       endTime,
     },
-    actions: { insertTyping, deleteTyping, resetTyping },
+    actions: { insertTyping, deleteTyping },
   } = useTyping(text?.content, {
     skipCurrentWordOnSpace: false, //
     pauseOnError: false, // When true, stays on the same character until it is correctly inputted. Otherwise, it moves on to the next character instead
@@ -68,8 +69,8 @@ function TypingInput({ data }) {
     } else {
       // initial cursor position
       return {
-        left: -1,
-        top: 2,
+        left: 7,
+        top: 15,
       };
     }
   }, [currIndex]);
@@ -94,9 +95,10 @@ function TypingInput({ data }) {
   //handle key presses
   const handleKeyDown = (letter, control) => {
     // determine what key was pressed
-    if (letter === "Escape") {
-      resetTyping();
-    } else if (letter === "Backspace") {
+    // if (letter === "Escape") {
+    //   resetTyping();
+    // } else
+    if (letter === "Backspace") {
       deleteTyping(control);
     } else if (letter.length === 1) {
       // if the pressed key's val is a single char
@@ -106,6 +108,13 @@ function TypingInput({ data }) {
 
   // new submission
   const newSubmit = async () => {
+    setErrors([]);
+    if (accuracy === null || duration === null || wpm === null) {
+      setErrors("There's no score to record");
+    }
+
+    if (errors.length) return;
+
     const record = {
       user_id,
       quote_id: text.id,
@@ -120,6 +129,13 @@ function TypingInput({ data }) {
   };
 
   const update = async () => {
+    setErrors([]);
+    if (accuracy === null || duration === null || wpm === null) {
+      setErrors("There's no score to record");
+    }
+
+    if (errors.length) return;
+
     const record = {
       id: currRecord[0].id,
       user_id,
@@ -160,18 +176,18 @@ function TypingInput({ data }) {
               </span>
             );
           })}
+          {phase !== PhaseType.Ended && isFocused ? (
+            <span
+              style={{
+                left: pos.left,
+                top: pos.top,
+              }}
+              className={"caret input"}
+            >
+              &nbsp;
+            </span>
+          ) : null}
         </div>
-        {phase !== PhaseType.Ended && isFocused ? (
-          <span
-            style={{
-              left: pos.left,
-              top: pos.top,
-            }}
-            className={"caret input"}
-          >
-            &nbsp;
-          </span>
-        ) : null}
       </div>
       <div className="container_row game_score_container">
         {score ? (
@@ -237,13 +253,27 @@ function TypingInput({ data }) {
         </div>
       </div>
       {!currRecord.length ? (
-        <button onClick={newSubmit} disabled={disable}>
-          Submit
-        </button>
+        <>
+          {errors.length > 0 ? <p className="errors">{errors}</p> : null}
+          <button
+            onClick={newSubmit}
+            disabled={disable}
+            className={disable ? "no_hover" : null}
+          >
+            Submit
+          </button>
+        </>
       ) : (
-        <button onClick={update} disabled={disable}>
-          Update Score
-        </button>
+        <>
+          {errors.length > 0 ? <p className="errors">{errors}</p> : null}
+          <button
+            onClick={update}
+            disabled={disable}
+            className={disable ? "no_hover" : null}
+          >
+            Update Score
+          </button>
+        </>
       )}
       <button onClick={back}>Back to quote list</button>
     </div>
