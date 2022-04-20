@@ -5,6 +5,7 @@ import quotes from "./quotes";
 import records from "./records";
 import comments from "./comments";
 import users from "./users";
+import searchQuotes from "./search";
 
 const rootReducer = combineReducers({
   session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   records,
   comments,
   users,
+  searchQuotes,
 });
 
 let enhancer;

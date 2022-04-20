@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./SearchBar.css";
+import { getSearchQuotesThunk } from "../store/search";
 
 const getFilteredSearch = (search, quoteList) => {
   if (!search) {
@@ -16,13 +17,17 @@ const getFilteredSearch = (search, quoteList) => {
 
 const SearchBar = () => {
   // const sessionUser = useSelector(state => state.session.user);
-
-  const quoteObj = useSelector(state => state.quotes);
+  const dispatch = useDispatch();
+  const quoteObj = useSelector(state => state.searchQuotes);
   const quoteList = Object.values(quoteObj);
 
   const [search, setSearch] = useState("");
 
   const filteredSearch = getFilteredSearch(search, quoteList);
+
+  useEffect(() => {
+    dispatch(getSearchQuotesThunk());
+  }, [dispatch]);
 
   return (
     <div className="search_bar_container">

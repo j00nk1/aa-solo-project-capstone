@@ -95,6 +95,7 @@ const recordReducer = (state = initialState, action) => {
     case GET_ALL_RECORDS:
       newState = {};
       action.records.records.forEach(record => (newState[record.id] = record));
+      action.records.records.sort((a, b) => b.updated_at - a.updated_at);
       return newState;
 
     case ADD_RECORD:
