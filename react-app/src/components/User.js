@@ -136,7 +136,7 @@ function User() {
                 </div>
                 <div
                   key={record.id + "comment_area"}
-                  className="container_col comment_area"
+                  className="container_col comment_area in_profile"
                 >
                   <Comments
                     key={record.id + "comment_area"}

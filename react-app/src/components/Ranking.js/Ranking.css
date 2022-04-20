@@ -2,9 +2,13 @@
   text-align: center;
 }
 
+.ranking_scores {
+  padding: 1rem 0;
+}
+
 .record_card {
   width: 80%;
-  margin: 1rem auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -30,4 +34,15 @@
 
 .rank_num {
   font-size: x-large;
+}
+
+.record_card.user_link {
+  padding: 1rem 0;
+}
+
+.record_card.user_link:hover {
+  background-color: rgba(47, 79, 79, 0.452);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
 }

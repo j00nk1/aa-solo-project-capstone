@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 
 import { getSingleQuoteThunk } from "../../store/quotes";
 import { getQuoteRecordsThunk } from "../../store/records";
@@ -10,13 +10,22 @@ import "./Ranking.css";
 
 function Ranking() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { quote_id } = useParams();
   const quoteRecordsObj = useSelector(state => state.records);
   const allUsersObj = useSelector(state => state.users);
-  const sortedRecords = Object.values(quoteRecordsObj).sort(
-    (a, b) => b.score - a.score
-  );
+  const sessionUser = useSelector(state => state.session.user);
+  let hasPlayed = false;
+  let record_id;
+  const sortedRecords = Object.values(quoteRecordsObj).sort((a, b) => {
+    if (a.user_id === sessionUser.id) {
+      record_id = a.id;
+      hasPlayed = true;
+    }
+    return b.score - a.score;
+  });
   const quote = useSelector(state => state?.quotes?.currQuote);
+  console.log(quoteRecordsObj);
 
   useEffect(() => {
     dispatch(getUsersThunk());
@@ -34,24 +43,68 @@ function Ranking() {
     <div className="quotes_container container_col">
       <h1 className="head_line">Ranking</h1>
       <div className="quote_card quote_wrapper">
-        <h2>Author: {quote?.author}</h2>
+        <h2 style={{ display: "inline-block", marginRight: "10px" }}>
+          Author: {quote?.author}
+        </h2>
+
         <blockquote>"{quote?.content}"</blockquote>
         <small>{quote?.char_count} characters</small>
+        {hasPlayed ? (
+          <NavLink
+            to={{
+              pathname: `/quotes/${quote?.id}`,
+              state: {
+                wpm: quoteRecordsObj[record_id]?.wpm,
+                accuracy: quoteRecordsObj[record_id]?.accuracy,
+                duration: quoteRecordsObj[record_id]?.duration / 1000,
+              },
+            }}
+            style={{ display: "inline-block", width: "100%" }}
+          >
+            <button
+              className="play_btn"
+              // onClick={() => history.push(`/quotes/${quote.id}`)}
+            >
+              Play again
+            </button>
+          </NavLink>
+        ) : (
+          <NavLink
+            to={`/quotes/${quote?.id}`}
+            style={{ display: "inline-block", width: "100%" }}
+          >
+            <button
+              className="play_btn"
+              // onClick={() => history.push(`/quotes/${quote.id}`)}
+            >
+              Play
+            </button>
+          </NavLink>
+        )}
       </div>
       <div className="ranking_scores record_container">
         {sortedRecords.length ? (
           sortedRecords.map((record, i) => (
-            <div className="record_card" key={record.id}>
+            <div
+              className="record_card user_link"
+              title="To this user's profile"
+              key={record.id}
+              onClick={() =>
+                history.push(`/users/${allUsersObj[record.user_id].id}`)
+              }
+            >
               <h3 className="rank_num">{i + 1}</h3>
               <div className="container_col user_score_info">
-                <h3>{allUsersObj[record.user_id].username}</h3>
+                <h3>{allUsersObj[record.user_id]?.username}</h3>
                 <ul className="record_list container_row">
                   <li className="wpm">{record.wpm}WPM</li>
                   <li className="acc">Accuracy: {record.accuracy}%</li>
-                  <li className="dur">Duration: {record.duration}s</li>
-                  <li>
+                  <li className="dur">Duration: {record.duration / 1000}s</li>
+                  <li>Score: {Math.round(record.score * 100) / 100}</li>
+                  {/* TODO: Render converted time  */}
+                  {/* <li>
                     <small>@{record.updated_at}</small>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
