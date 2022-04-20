@@ -12,6 +12,16 @@
 .status_wrapper {
   margin-top: 1rem;
   justify-content: space-around;
+  text-align: left;
+}
+
+.status_wrapper > div {
+  width: 45%;
+}
+
+.status_wrapper h3 {
+  color: #fb923c;
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 .avg_score,

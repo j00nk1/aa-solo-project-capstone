@@ -18,6 +18,7 @@ function User() {
   const sessionUser = useSelector(state => state.session.user);
   const recordList = useSelector(state => Object.values(state.records));
   const quoteObj = useSelector(state => state.quotes);
+  const highestScore = recordList.sort((a, b) => b.score - a.score)[0];
 
   let avg_wpm = 0;
   let avg_acc = 0;
@@ -26,7 +27,7 @@ function User() {
   recordList.forEach(record => {
     avg_wpm += record.wpm;
     avg_acc += record.accuracy;
-    avg_dur += record.duration;
+    avg_dur += record.dur_time;
   });
 
   if (avg_wpm) avg_wpm = avg_wpm / recordList.length;
@@ -78,19 +79,33 @@ function User() {
         <div className="status_wrapper container_row">
           <div className="avg_score">
             <h3>Average Score</h3>
-            <ul>
-              <li>WPM: {Math.round(avg_wpm * 100) / 100}</li>
-              <li>Accuracy: {Math.round(avg_acc * 100) / 100}%</li>
-              <li>Duration {Math.round(avg_dur) / 1000}s</li>
-            </ul>
+            {avg_wpm ? (
+              <ul>
+                <li>WPM: {Math.round(avg_wpm * 100) / 100}</li>
+                <li>Accuracy: {Math.round(avg_acc * 100) / 100}%</li>
+                <li>Duration: {Math.round(avg_dur * 1000) / 1000}s</li>
+              </ul>
+            ) : (
+              <p>There's no records to display</p>
+            )}
           </div>
           <div className="last_played">
-            <h3>Last Played</h3>
-            <ul>
-              <li>quote.author</li>
-              <li>quote.content</li>
-              <li>quote.char_count</li>
-            </ul>
+            <h3>Hightest Record</h3>
+            {highestScore && quoteObj ? (
+              <ul>
+                <li>
+                  Author: {quoteObj[highestScore?.quote_id]?.author}{" "}
+                  <small>
+                    {quoteObj[highestScore?.quote_id]?.char_count} Characters
+                  </small>
+                </li>
+                <li>WPM: {highestScore.wpm}</li>
+                <li>Accuracy: {highestScore.accuracy}</li>
+                <li>Duration: {highestScore.dur_time}</li>
+              </ul>
+            ) : (
+              <p>There's no records to display</p>
+            )}
           </div>
         </div>
       </div>
@@ -175,7 +190,7 @@ function User() {
             ))}
           {!recordList.length && (
             <div className="record_container">
-              <p>No Record Yet</p>
+              <p>There's no records to display</p>
               {/* <NavLink >Play the game and create a new record!</NavLink> */}
             </div>
           )}

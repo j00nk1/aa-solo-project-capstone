@@ -12,19 +12,19 @@ record_routes = Blueprint("records", __name__)
 # WHOLE records
 @record_routes.route('/')
 def records():
-  records = Record.query.order_by(desc("updated_at")).all()
+  records = Record.query.order_by(Record.updated_at.desc())
   return {'records': [record.to_dict() for record in records]}
 
 # User's records
 @record_routes.route('/users/<int:user_id>/')
 def user_records(user_id):
-  records = Record.query.filter_by(user_id = user_id).order_by(desc("updated_at"))
+  records = Record.query.filter_by(user_id = user_id).order_by(Record.updated_at.desc())
   return {'records': [record.to_dict() for record in records]}
 
 # Quote's records
 @record_routes.route('/quotes/<int:quote_id>/')
 def quote_records(quote_id):
-  records = Record.query.filter_by(quote_id = quote_id).order_by(desc("updated_at"))
+  records = Record.query.filter_by(quote_id = quote_id).order_by(Record.updated_at.desc())
   return {'records': [record.to_dict() for record in records]}
 
 

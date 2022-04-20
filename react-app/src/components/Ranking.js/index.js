@@ -128,7 +128,7 @@ function Ranking() {
             </div>
           ))
         ) : (
-          <h3 style={{ textAlign: "center" }}>There's no record yet</h3>
+          <h3 style={{ textAlign: "center" }}>There's no records to display</h3>
         )}
       </div>
     </div>
