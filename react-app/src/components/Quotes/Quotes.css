@@ -1,0 +1,7 @@
+.ranking_link_area:hover {
+  background-color: rgba(47, 79, 79, 0.452);
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.5s;
+}

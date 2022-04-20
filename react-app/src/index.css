@@ -150,12 +150,14 @@ nav .container_row {
   border-radius: 20px;
 }
 
+.record_wrapper,
 .quote_wrapper {
   padding: 1rem;
   background-color: #27272a;
   border-radius: 1rem;
 }
 
+/* .record_card, */
 .quote_card {
   justify-content: space-between;
 }

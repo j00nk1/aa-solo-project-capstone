@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
 import { deleteRecordThunk, getUserRecordsThunk } from "../../store/records";
 
+import "./Quotes.css";
+
 function Quotes() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const quoteList = useSelector(state => Object.values(state.quotes));
   const sessionUser = useSelector(state => state.session.user);
@@ -61,7 +64,11 @@ function Quotes() {
           quoteList.map(quote => (
             <div key={quote.id} className="quote_wrapper">
               <div className="quote_card container_row">
-                <div>
+                <div
+                  className="ranking_link_area"
+                  title="To ranking page"
+                  onClick={() => history.push(`/ranking/${quote.id}/`)}
+                >
                   <h2>{quote.author}</h2>
                   <blockquote>{quote.content}</blockquote>
                   <small>{quote.char_count} characters</small>

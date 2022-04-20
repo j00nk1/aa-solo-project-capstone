@@ -36,3 +36,7 @@
 .edit_btn {
   margin: 5px 5px;
 }
+
+.comment_area.in_profile {
+  width: 100%;
+}
