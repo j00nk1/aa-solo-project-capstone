@@ -46,7 +46,7 @@ const LoginForm = () => {
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div>
+        <div className="container_row auth_input">
           <label htmlFor="email">Email</label>
           <input
             name="email"
@@ -56,7 +56,7 @@ const LoginForm = () => {
             onChange={updateEmail}
           />
         </div>
-        <div>
+        <div className="container_row  auth_input">
           <label htmlFor="password">Password</label>
           <input
             name="password"
@@ -65,12 +65,12 @@ const LoginForm = () => {
             value={password}
             onChange={updatePassword}
           />
-          <div style={{ margin: "1rem auto", textAlign: "center" }}>
-            <button type="submit" style={{ marginRight: "1rem" }}>
-              Login
-            </button>
-            <button onClick={demoLogin}>DEMO USER</button>
-          </div>
+        </div>
+        <div style={{ margin: "1rem auto", textAlign: "center" }}>
+          <button type="submit" style={{ marginRight: "1rem" }}>
+            Login
+          </button>
+          <button onClick={demoLogin}>DEMO USER</button>
         </div>
       </form>
       <div className="login-signup">

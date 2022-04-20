@@ -21,7 +21,7 @@ const NavBar = () => {
             Quote Typing
           </NavLink>
         </h1>
-        <SearchBar />
+        {userVals.length > 0 && <SearchBar />}
       </div>
       <ul className="container_row">
         <li>

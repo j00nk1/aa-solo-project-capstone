@@ -1,0 +1,14 @@
+.auth_input {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+
+.auth_form {
+  text-align: center;
+}
+
+.login-signup {
+  margin-top: 1rem;
+}

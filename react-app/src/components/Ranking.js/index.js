@@ -18,22 +18,36 @@ function Ranking() {
   let hasPlayed = false;
   let record_id;
   const sortedRecords = Object.values(quoteRecordsObj).sort((a, b) => {
-    if (a.user_id === sessionUser.id) {
+    if (a.user_id === sessionUser.id || b.user_id === sessionUser.id) {
       record_id = a.id;
       hasPlayed = true;
     }
+    if (b.score === a.score) {
+      return a.duration - b.duration;
+    }
     return b.score - a.score;
   });
-  const quote = useSelector(state => state?.quotes?.currQuote);
-  console.log(quoteRecordsObj);
 
-  useEffect(() => {
-    dispatch(getUsersThunk());
-  }, [dispatch]);
+  // if there is only one record, it doesn't run the sort function,
+  // so manually check the record and see the session user has played this quote
+  if (
+    sortedRecords.length === 1 &&
+    sortedRecords[0].user_id === sessionUser.id
+  ) {
+    hasPlayed = true;
+    record_id = sortedRecords[0].id;
+  }
+
+  const quote = useSelector(state => state?.quotes?.currQuote);
+  // console.log("QUOTE", quote);
 
   useEffect(() => {
     dispatch(getSingleQuoteThunk(quote_id));
   }, [dispatch, quote_id]);
+
+  useEffect(() => {
+    dispatch(getUsersThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getQuoteRecordsThunk(quote_id));
@@ -46,13 +60,14 @@ function Ranking() {
         <h2 style={{ display: "inline-block", marginRight: "10px" }}>
           Author: {quote?.author}
         </h2>
-
-        <blockquote>"{quote?.content}"</blockquote>
-        <small>{quote?.char_count} characters</small>
+        <div>
+          <blockquote>"{quote?.content}"</blockquote>
+          <small>{quote?.char_count} characters</small>
+        </div>
         {hasPlayed ? (
           <NavLink
             to={{
-              pathname: `/quotes/${quote?.id}`,
+              pathname: `/quotes/${quote_id}`,
               state: {
                 wpm: quoteRecordsObj[record_id]?.wpm,
                 accuracy: quoteRecordsObj[record_id]?.accuracy,
@@ -70,7 +85,7 @@ function Ranking() {
           </NavLink>
         ) : (
           <NavLink
-            to={`/quotes/${quote?.id}`}
+            to={`/quotes/${quote_id}`}
             style={{ display: "inline-block", width: "100%" }}
           >
             <button
