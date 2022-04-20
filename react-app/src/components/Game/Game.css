@@ -25,7 +25,7 @@
 .caret {
   animation-name: flash; /* cooperate with @keyframes */
   animation-iteration-count: infinite;
-  animation-duration: 0.75s;
+  animation-duration: 1s;
   transition: 0.12s;
   border-left: 1px solid white;
 }
@@ -38,6 +38,10 @@
 .score_in_game {
   font-weight: normal;
 }
+/* 
+.typing_container {
+  position: relative;
+} */
 
 .text_container {
   margin: 1rem auto;
@@ -45,6 +49,7 @@
   padding: 1rem 0.5rem;
   word-spacing: 2px;
   font-size: large;
+  position: relative;
 }
 
 .text_container:focus {
@@ -68,4 +73,10 @@
 
 .negative {
   color: crimson;
+}
+
+.no_hover:hover {
+  background-color: rgba(239, 239, 239, 0.3);
+  color: #474748;
+  cursor: not-allowed;
 }
