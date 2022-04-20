@@ -8,7 +8,7 @@ import { getUsersThunk } from "../store/users";
 import Comments from "./Comments";
 import "./User.css";
 
-import { deleteBtn } from "../functions";
+import { deleteBtn, localDate, localTime } from "../functions";
 
 function User() {
   const dispatch = useDispatch();
@@ -135,9 +135,15 @@ function User() {
                       {quoteObj[record.quote_id]?.char_count} Characters
                     </small>
                     <ul className="record_list container_row">
-                      <p className="wpm">{record.wpm}WPM</p>
-                      <p className="acc">Accuracy: {record.accuracy}%</p>
-                      <p className="dur">Duration: {record.dur_time}s</p>
+                      <li className="wpm">{record.wpm}WPM</li>
+                      <li className="acc">Accuracy: {record.accuracy}%</li>
+                      <li className="dur">Duration: {record.dur_time}s</li>
+                      <li>
+                        <small>@{localTime(record.updated_at)}</small>
+                        <small className="updated_date">
+                          {localDate(record.updated_at)}
+                        </small>
+                      </li>
                     </ul>
                   </div>
                   {sessionUser.id === +userId && (

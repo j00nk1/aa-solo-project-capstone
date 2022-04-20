@@ -28,7 +28,7 @@ def seed_records():
         return (acc, dur, generated_wpm)
     
     data = []
-    for x in range(250):
+    for x in range(150):
         u_id=num_picker(x, user_ids),
         q_id=num_picker(x, quote_ids),
         score = score_generator(q_id)
