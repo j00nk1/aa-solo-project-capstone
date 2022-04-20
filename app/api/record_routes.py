@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, request
+from sqlalchemy import desc
 from app.api.auth_routes import validation_errors_to_error_messages
 
 # from app.api.auth_routes import validation_errors_to_error_messages
@@ -11,19 +12,19 @@ record_routes = Blueprint("records", __name__)
 # WHOLE records
 @record_routes.route('/')
 def records():
-  records = Record.query.all()
+  records = Record.query.order_by(desc("updated_at")).all()
   return {'records': [record.to_dict() for record in records]}
 
 # User's records
 @record_routes.route('/users/<int:user_id>/')
 def user_records(user_id):
-  records = Record.query.filter_by(user_id = user_id)
+  records = Record.query.filter_by(user_id = user_id).order_by(desc("updated_at"))
   return {'records': [record.to_dict() for record in records]}
 
 # Quote's records
 @record_routes.route('/quotes/<int:quote_id>/')
 def quote_records(quote_id):
-  records = Record.query.filter_by(quote_id = quote_id)
+  records = Record.query.filter_by(quote_id = quote_id).order_by(desc("updated_at"))
   return {'records': [record.to_dict() for record in records]}
 
 

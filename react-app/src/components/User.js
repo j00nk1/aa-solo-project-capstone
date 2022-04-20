@@ -19,6 +19,20 @@ function User() {
   const recordList = useSelector(state => Object.values(state.records));
   const quoteObj = useSelector(state => state.quotes);
 
+  let avg_wpm = 0;
+  let avg_acc = 0;
+  let avg_dur = 0;
+
+  recordList.forEach(record => {
+    avg_wpm += record.wpm;
+    avg_acc += record.accuracy;
+    avg_dur += record.duration;
+  });
+
+  if (avg_wpm) avg_wpm = avg_wpm / recordList.length;
+  if (avg_acc) avg_acc = avg_acc / recordList.length;
+  if (avg_dur) avg_dur = avg_dur / recordList.length;
+
   useEffect(() => {
     if (!userId) {
       return;
@@ -59,20 +73,30 @@ function User() {
 
   return (
     <div>
-      <ul>
-        <li>
-          <strong>User Id</strong> {userId}
-        </li>
-        <li>
-          <strong>Username</strong> {user.username}
-        </li>
-        <li>
-          <strong>Email</strong> {user.email}
-        </li>
-      </ul>
+      <div className="profile_header_container container_col">
+        <h2>{user.username}'s status</h2>
+        <div className="status_wrapper container_row">
+          <div className="avg_score">
+            <h3>Average Score</h3>
+            <ul>
+              <li>WPM: {Math.round(avg_wpm * 100) / 100}</li>
+              <li>Accuracy: {Math.round(avg_acc * 100) / 100}%</li>
+              <li>Duration {Math.round(avg_dur) / 1000}s</li>
+            </ul>
+          </div>
+          <div className="last_played">
+            <h3>Last Played</h3>
+            <ul>
+              <li>quote.author</li>
+              <li>quote.content</li>
+              <li>quote.char_count</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <div className="quotes_container qc_in_profile">
-        <h1 className="head_line">{user.username}'s Record</h1>
+        <h2 className="head_line">{user.username}'s Records</h2>
         <div className="quote_wrapper">
           {recordList.length > 0 &&
             recordList.map(record => (

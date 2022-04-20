@@ -1,3 +1,26 @@
+.profile_header_container {
+  background-color: #323236;
+  width: 90%;
+  max-width: 1000px;
+  min-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.status_wrapper {
+  margin-top: 1rem;
+  justify-content: space-around;
+}
+
+.avg_score,
+.last_played {
+  background-color: #27272a;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
 .quotes_container.qc_in_profile {
   max-height: none;
   overflow-y: unset;
