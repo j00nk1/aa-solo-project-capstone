@@ -80,3 +80,7 @@
   color: #474748;
   cursor: not-allowed;
 }
+
+.btn_container.in_game {
+  margin-top: 1rem;
+}
