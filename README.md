@@ -55,9 +55,10 @@ Most of the quotes are fetched from[ZenQuotes.io](https://zenquotes.io/).
    flask run
    ```
 
-6. To run the React App in development, cd into the `react-app` directory and run your react app
+6. To run the React App in development, cd into the `react-app` directory and install the dependencies, then run your react app
 
    ```bash
+   npm install
    npm start
    ```
 
