@@ -252,30 +252,32 @@ function TypingInput({ data }) {
           {/*👆 TODO: DELETE THIS BLOCK 👆 */}
         </div>
       </div>
-      {!currRecord.length ? (
-        <>
-          {errors.length > 0 ? <p className="errors">{errors}</p> : null}
-          <button
-            onClick={newSubmit}
-            disabled={disable}
-            className={disable ? "no_hover" : null}
-          >
-            Submit
-          </button>
-        </>
-      ) : (
-        <>
-          {errors.length > 0 ? <p className="errors">{errors}</p> : null}
-          <button
-            onClick={update}
-            disabled={disable}
-            className={disable ? "no_hover" : null}
-          >
-            Update Score
-          </button>
-        </>
-      )}
-      <button onClick={back}>Back to quote list</button>
+      <div className="btn_container container_row in_game">
+        {!currRecord.length ? (
+          <>
+            {errors.length > 0 ? <p className="errors">{errors}</p> : null}
+            <button
+              onClick={newSubmit}
+              disabled={disable}
+              className={disable ? "no_hover" : null}
+            >
+              Submit
+            </button>
+          </>
+        ) : (
+          <>
+            {errors.length > 0 ? <p className="errors">{errors}</p> : null}
+            <button
+              onClick={update}
+              disabled={disable}
+              className={disable ? "no_hover" : null}
+            >
+              Update Score
+            </button>
+          </>
+        )}
+        <button onClick={back}>Back to quote list</button>
+      </div>
     </div>
   );
 }
