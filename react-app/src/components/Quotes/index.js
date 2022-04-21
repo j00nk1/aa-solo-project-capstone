@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { deleteBtn } from "../../functions";
+import { deleteBtn, localDate, localTime } from "../../functions";
 
 // -----------thunk---------
 import { getQuotesThunk } from "../../store/quotes";
@@ -43,12 +43,13 @@ function Quotes() {
 
   // since useState will rerender too many times in the nested loop,
   // use this method to set scores
-  let wpm, accuracy, duration, record_id;
+  let wpm, accuracy, duration, record_id, updated_at;
   const setScore = rec => {
     wpm = rec.wpm;
     accuracy = rec.accuracy;
     duration = rec.dur_time;
     record_id = rec.id;
+    updated_at = rec.updated_at;
     played = true;
   };
 
@@ -74,6 +75,12 @@ function Quotes() {
                         <li className="wpm">{`${wpm}WPM`}</li>
                         <li className="acc">Accuracy: {accuracy}%</li>
                         <li className="dur">Duration: {duration}s</li>
+                        <li>
+                          <small>@{localTime(updated_at)}</small>
+                          <small className="updated_date">
+                            {localDate(updated_at)}
+                          </small>
+                        </li>
                         {/* <button
                       value={record_id}
                       onClick={e => console.log(e.target.value)}
