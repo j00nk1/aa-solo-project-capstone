@@ -1,5 +1,4 @@
 from datetime import datetime
-from dateutil import tz
 
 from .db import db
 

@@ -15,6 +15,7 @@ class Comment(db.Model):
 
     user = db.relationship("User", back_populates="comments")
     record = db.relationship("Record", back_populates="comments")
+    timed_record = db.relationship("Timed_Record", back_populates="comments")
 
     def to_dict(self):
         return {
