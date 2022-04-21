@@ -37,6 +37,7 @@
 
 .rank_num {
   font-size: x-large;
+  min-width: 28px;
 }
 
 .record_card.user_link {
