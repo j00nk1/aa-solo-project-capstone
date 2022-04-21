@@ -83,7 +83,7 @@ function User() {
               <ul>
                 <li>WPM: {Math.round(avg_wpm * 100) / 100}</li>
                 <li>Accuracy: {Math.round(avg_acc * 100) / 100}%</li>
-                <li>Duration: {Math.round(avg_dur * 1000) / 1000}s</li>
+                {/* <li>Duration: {Math.round(avg_dur * 1000) / 1000}s</li> */}
               </ul>
             ) : (
               <p>There's no records to display</p>

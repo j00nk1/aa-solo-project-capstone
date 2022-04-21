@@ -1,3 +1,12 @@
-.nav_left {
+/* .nav_left {
   flex-grow: 2;
+} */
+
+.nav_center * {
+  font-size: x-large;
+}
+
+.nav_center a:hover {
+  color: orange;
+  transition: 0.5s;
 }
