@@ -40,6 +40,8 @@ function Ranking() {
     record_id = sortedRecords[0].id;
   }
 
+  if (sortedRecords.length > 10) sortedRecords.length = 10;
+
   const quote = useSelector(state => state?.quotes?.currQuote);
 
   useEffect(() => {
