@@ -1,4 +1,3 @@
-from datetime import datetime
 from flask import Blueprint, request
 from app.api.auth_routes import validation_errors_to_error_messages
 
@@ -31,6 +30,8 @@ def post_timed_records():
       wpm = form.data["wpm"],
     )
     
+    db.session.add(record)
+    db.session.commit()
     return record.to_dict()
   
   return {'errors': validation_errors_to_error_messages(form.errors)}, 401

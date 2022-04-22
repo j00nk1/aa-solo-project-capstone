@@ -2,7 +2,7 @@ from datetime import datetime
 from .db import db
 
 class Timed_Record(db.Model):
-  __tablename__ = "timed_record"
+  __tablename__ = "timed_records"
   
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)

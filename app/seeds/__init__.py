@@ -23,7 +23,7 @@ def seed():
 
 # only add timed_records, 
 # TODO: may need another comment model or add t_rec id(nullable) & make rec_id nullable? but either one of them needs to be saved on submission
-@seed_commands.command("timed_records")
+@seed_commands.command("t_rec")
 def seed_t_rec():
     seed_timed_records()
 
@@ -36,3 +36,7 @@ def undo():
     undo_comments()
     undo_timed_records()
     # Add other undo functions here
+
+@seed_commands.command("undo_t_rec")
+def undo_t_rec():
+    undo_timed_records()

@@ -8,7 +8,8 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    record_id = db.Column(db.Integer, db.ForeignKey("records.id", ondelete="CASCADE"), nullable=False)
+    record_id = db.Column(db.Integer, db.ForeignKey("records.id", ondelete="CASCADE"))
+    timed_record_id = db.Column(db.Integer, db.ForeignKey("timed_records.id", ondelete="CASCADE"))
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow())
