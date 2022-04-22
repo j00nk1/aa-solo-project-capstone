@@ -112,5 +112,5 @@ In the profile page, users can see their own status and records as well as comme
 - Users can write a comment on the record.
 - Users can edit/delete their own comment.(They can't edit/delete other users' comments)
 
-(Other user's)
+(Other user's profile page)
 ![](/imgs/profile_others.png)
