@@ -1,6 +1,5 @@
 from datetime import datetime
 from flask import Blueprint, request
-from sqlalchemy import desc
 from app.api.auth_routes import validation_errors_to_error_messages
 
 # from app.api.auth_routes import validation_errors_to_error_messages

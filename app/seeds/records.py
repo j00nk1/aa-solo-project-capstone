@@ -13,7 +13,7 @@ def seed_records():
     
     def score_generator(quote_id):
         # generate accuracy
-        quote = Quote.query.get(quote_id)
+        quote = Quote.query(Quote.char_count).get(quote_id)
         length = quote.char_count
         correct_char = randint(4, length)
         acc = round(correct_char/length *100, 2)
@@ -29,11 +29,11 @@ def seed_records():
     
     data = []
     for x in range(150):
-        u_id=num_picker(x, user_ids),
-        q_id=num_picker(x, quote_ids),
+        u_id=num_picker(x, user_ids)
+        q_id=num_picker(x, quote_ids)
         score = score_generator(q_id)
-        acc=score[0],
-        dur=score[1],
+        acc=score[0]
+        dur=score[1]
         setWpm=score[2]
         data.append(Record(user_id=u_id, quote_id=q_id, accuracy=acc, duration=dur, wpm=setWpm))
     

@@ -12,6 +12,7 @@ from .api.auth_routes import auth_routes
 from .api.quote_routes import quote_routes
 from .api.record_routes import record_routes
 from .api.comment_routes import comment_routes
+from .api.timed_record_routes import timed_record_routes
 
 from .seeds import seed_commands
 
@@ -40,6 +41,7 @@ app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(quote_routes, url_prefix="/api/quotes")
 app.register_blueprint(record_routes, url_prefix="/api/records")
 app.register_blueprint(comment_routes, url_prefix="/api/comments")
+app.register_blueprint(timed_record_routes, url_prefix="/api/timed_records")
 
 
 db.init_app(app)

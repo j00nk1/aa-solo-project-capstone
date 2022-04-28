@@ -16,6 +16,8 @@ class User(db.Model, UserMixin):
 
     comments = db.relationship("Comment", cascade="all,delete", back_populates="user")
 
+    timed_records = db.relationship("Timed_Record", cascade="all,delete", back_populates="user")
+    
     @property
     def password(self):
         return self.hashed_password
