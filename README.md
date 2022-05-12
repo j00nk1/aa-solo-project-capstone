@@ -78,9 +78,45 @@ Users can see all the quotes and button(s) on each quote. Also users can see the
 
 ![qt_landing](/imgs/qt_landing.png)
 
+#### Challenge:
+
+This page was actually the hardest part for me to implement and to determine whether the user has already played the quote or not since the quote table doesn’t have the user id or record id and couldn’t render properly. My initial approach was to use the useState hook that checks the record table associated with the session user’s id and each quote’s id. However, because I used the hook inside of the map function on the quotes, the state gets updated in every iteration and triggered too many re-renders and that caused an infinite loop in React.
+
+#### Solution:
+
+To avoid the infinite loop, I created a custom function called `hasPlayed` that takes a `quote_id` and session user’s `recordList` (grabbed from the redux state) as its parameters and returns `true` and set the `played` variable that was declared before the function to `true` if the record’s `quote_id` and the current `quote_id` matches. I also created the `setScore` function that takes a record and called in the `hasPlayed` function, so that I don’t have to call the `hasPlayed` function over and over in the component.
+
+<!-- I think this is not an efficient way since the `hasPlayed` will iterate through the record at least once on every quote and that makes it O(n^2) time complexity. I should come up with the better solution such as making a new component and put it in the map call(right after the map), then use the useState to update the scores/play buttons -->
+
+```js
+let played; // initialized a variable that stores boolean & render scores if true
+const hasPlayed = (quote_id, records = recordList) => {
+  for (let i = 0; i < records.length; i++) {
+    const record = records[i];
+    if (record.quote_id === quote_id) {
+      setScore(record);
+      return true;
+    }
+  }
+  played = false;
+  return false;
+};
+
+// initialized variables here so that I can grab the info in the component
+let wpm, accuracy, duration, record_id, updated_at;
+const setScore = rec => {
+  wpm = rec.wpm;
+  accuracy = rec.accuracy;
+  duration = rec.dur_time;
+  record_id = rec.id;
+  updated_at = rec.updated_at;
+  played = true;
+};
+```
+
 ### Ranking Page
 
-Users can see the quote's information and the top 10 highest scores of the quote.
+Users can see the quote's information and its top 10 highest scores.
 Users can go to the quote's typing game page from this page by clicking on "play" or "play again" button.
 User can also go to other user's profile page by clicking on their record section.
 ![](/imgs/qt_ranking.png)
