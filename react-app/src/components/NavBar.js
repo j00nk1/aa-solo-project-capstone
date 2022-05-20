@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import LogoutButton from "./auth/LogoutButton";
 import SearchBar from "./SearchBar";
 import "./NavBar.css";
+import icon from "./favicon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -20,7 +21,7 @@ const NavBar = () => {
       <div className="container_row nav_left">
         <h1>
           <NavLink to="/" exact={true} activeClassName="active">
-            Quote Typing
+            <img src={icon} alt="icon" className="icon" />
           </NavLink>
         </h1>
         {userVals.length > 0 && <SearchBar />}

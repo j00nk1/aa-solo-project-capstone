@@ -10,3 +10,8 @@
   color: orange;
   transition: 0.5s;
 }
+
+.icon {
+  width: auto;
+  height: 24px;
+}
