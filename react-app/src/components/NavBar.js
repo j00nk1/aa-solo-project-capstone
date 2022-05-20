@@ -42,11 +42,6 @@ const NavBar = () => {
         </li>
       </ul>
       <ul className="container_row">
-        <li>
-          <NavLink to="/" exact={true} activeClassName="active">
-            Home
-          </NavLink>
-        </li>
         {userVals.length > 0 ? (
           <>
             <li>

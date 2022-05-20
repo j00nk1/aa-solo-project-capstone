@@ -13,6 +13,7 @@ import Game from "./components/Game";
 import Ranking from "./components/Ranking.js";
 
 import { authenticate } from "./store/session";
+import Welcome from "./components/Welcome/Welcome";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -34,6 +35,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/login" exact={true}>
+          <Welcome />
           <LoginForm />
         </Route>
         <Route path="/sign-up" exact={true}>
